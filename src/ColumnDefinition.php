@@ -58,12 +58,19 @@ class ColumnDefinition
      */
     public function getDefinition()
     {
-        $definition = '$table->%s(\'%s\');';
+        $definition = '$table->%s(\'%s\')%s;';
+
+        $modifiers = [];
+
+        if (false === $this->column->getNotnull()) {
+            $modifiers[] = '->nullable()';
+        }
 
         $definition = sprintf(
             $definition,
             $this->getTypeName(),
-            $this->column->getName()
+            $this->column->getName(),
+            implode('', $modifiers)
         );
 
         return [
