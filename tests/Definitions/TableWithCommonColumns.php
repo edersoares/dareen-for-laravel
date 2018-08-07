@@ -12,6 +12,7 @@ class TableWithCommonColumns extends AbstractDefinition
     public function up()
     {
         $this->builder->create('common', function (Blueprint $table) {
+            $table->boolean('common_boolean');
             $table->date('common_date');
             $table->dateTime('common_datetime');
             $table->decimal('common_decimal');
@@ -37,6 +38,7 @@ class TableWithCommonColumns extends AbstractDefinition
     public function getDefinition()
     {
         return [
+            '$table->boolean(\'common_boolean\');',
             '$table->date(\'common_date\');',
             '$table->dateTime(\'common_datetime\');',
             '$table->decimal(\'common_decimal\');',
