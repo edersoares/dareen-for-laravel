@@ -21,7 +21,7 @@ class TableWithNullableColumn extends AbstractDefinition
      */
     public function down()
     {
-        $this->builder->dropIfExists('common');
+        $this->builder->dropIfExists('nullable');
     }
 
     /**
