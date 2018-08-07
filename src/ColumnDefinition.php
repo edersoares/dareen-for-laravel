@@ -66,6 +66,14 @@ class ColumnDefinition
             $modifiers[] = '->nullable()';
         }
 
+        if ($default = $this->column->getDefault()) {
+            if (is_numeric($default)) {
+                $modifiers[] = '->default(' . $default . ')';
+            } elseif (is_string($default)) {
+                $modifiers[] = '->default(\'' . $default . '\')';
+            }
+        }
+
         $definition = sprintf(
             $definition,
             $this->getTypeName(),

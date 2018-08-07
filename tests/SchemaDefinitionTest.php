@@ -4,6 +4,7 @@ namespace Tests;
 
 use Tests\Definitions\BasicTableWithOneColumn;
 use Tests\Definitions\TableWithCommonColumns;
+use Tests\Definitions\TableWithDefaultValueForColumn;
 use Tests\Definitions\TableWithNullableColumn;
 
 class SchemaDefinitionTest extends TestCase
@@ -49,6 +50,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new TableWithNullableColumn()
+        );
+    }
+
+    /**
+     * @see TableWithDefaultValueForColumn
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testWithDefaultValueForColumn()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new TableWithDefaultValueForColumn()
         );
     }
 }
