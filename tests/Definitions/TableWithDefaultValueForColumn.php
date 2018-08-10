@@ -12,6 +12,8 @@ class TableWithDefaultValueForColumn extends AbstractDefinition
     public function up()
     {
         $this->builder->create('default_value', function (Blueprint $table) {
+            $table->decimal('default_decimal')->default(12.34);
+            $table->float('default_float')->default(9876.54);
             $table->integer('default_integer')->default(100);
             $table->string('default_string')->default('string');
         });
@@ -31,8 +33,10 @@ class TableWithDefaultValueForColumn extends AbstractDefinition
     public function getDefinition()
     {
         return [
+            '$table->decimal(\'default_decimal\')->default(12.34);',
+            '$table->float(\'default_float\')->default(9876.54);',
             '$table->integer(\'default_integer\')->default(100);',
-            '$table->string(\'default_string\')->default(\'string\');'
+            '$table->string(\'default_string\')->default(\'string\');',
         ];
     }
 
