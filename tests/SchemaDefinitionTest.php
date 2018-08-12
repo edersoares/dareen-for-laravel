@@ -13,6 +13,7 @@ use Tests\Definitions\BlueprintFloat;
 use Tests\Definitions\BlueprintInteger;
 use Tests\Definitions\BlueprintString;
 use Tests\Definitions\BlueprintText;
+use Tests\Definitions\BlueprintTime;
 use Tests\Definitions\TableWithCommonColumns;
 use Tests\Definitions\TableWithDefaultValueForColumn;
 use Tests\Definitions\TableWithNullableColumn;
@@ -214,6 +215,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new BlueprintDateTime()
+        );
+    }
+
+    /**
+     * @see BlueprintTime
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testBlueprintTime()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new BlueprintTime()
         );
     }
 }
