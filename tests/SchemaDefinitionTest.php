@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Tests\Definitions\BasicTableWithOneColumn;
+use Tests\Definitions\BlueprintDecimal;
 use Tests\Definitions\BlueprintFloat;
 use Tests\Definitions\BlueprintInteger;
 use Tests\Definitions\TableWithCommonColumns;
@@ -94,6 +95,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new BlueprintFloat()
+        );
+    }
+
+    /**
+     * @see BlueprintDecimal
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testBlueprintDecimal()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new BlueprintDecimal()
         );
     }
 }
