@@ -69,8 +69,13 @@ class ColumnDefinition
             $modifiers[] = '->nullable()';
         }
 
-        if ($default = $this->column->getDefault()) {
-            if (is_numeric($default)) {
+        $default = $this->column->getDefault();
+
+        if (isset($default)) {
+            if ($type === 'boolean' ) {
+                $value = $default ? 'true' : 'false';
+                $modifiers[] = '->default(' . $value . ')';
+            } elseif (is_numeric($default)) {
                 $modifiers[] = '->default(' . $default . ')';
             } elseif (is_string($default)) {
                 $modifiers[] = '->default(\'' . $default . '\')';
@@ -83,6 +88,12 @@ class ColumnDefinition
 
         if ($this->column->getAutoincrement()) {
             $parameters[] = ', true';
+        }
+
+        $comment = $this->column->getComment();
+
+        if ($comment) {
+            $modifiers[] = '->comment(\'' . $comment . '\')';
         }
 
         $definition = sprintf(
