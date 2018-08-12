@@ -30,7 +30,7 @@ class TableWithDefaultValueForColumn extends AbstractDefinition
     /**
      * @inheritDoc
      */
-    public function getDefinition()
+    public function getDefinition($driver)
     {
         return [
             '$table->decimal(\'default_decimal\')->default(12.34);',

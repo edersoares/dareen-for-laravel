@@ -28,7 +28,7 @@ class BlueprintInteger extends AbstractDefinition
     /**
      * @inheritDoc
      */
-    public function getDefinition()
+    public function getDefinition($driver)
     {
         return [
             '$table->integer(\'default_integer\');',

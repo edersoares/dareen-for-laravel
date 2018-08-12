@@ -60,6 +60,8 @@ class ColumnDefinition
     {
         $definition = '$table->%s(\'%s\'%s)%s;';
 
+        $type = $this->getTypeName();
+
         $modifiers = [];
         $parameters = [];
 
@@ -75,13 +77,17 @@ class ColumnDefinition
             }
         }
 
+        if ($type === 'string' && $this->column->getFixed()) {
+            $type = 'char';
+        }
+
         if ($this->column->getAutoincrement()) {
             $parameters[] = ', true';
         }
 
         $definition = sprintf(
             $definition,
-            $this->getTypeName(),
+            $type,
             $this->column->getName(),
             implode('', $parameters),
             implode('', $modifiers)

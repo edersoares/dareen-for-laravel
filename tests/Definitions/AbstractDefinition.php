@@ -50,9 +50,11 @@ abstract class AbstractDefinition
     /**
      * Return the expected definition.
      *
+     * @param string $driver
+     *
      * @return array
      */
-    abstract public function getDefinition();
+    abstract public function getDefinition($driver);
 
     /**
      * Return the table name created.

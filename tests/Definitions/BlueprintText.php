@@ -27,7 +27,7 @@ class BlueprintText extends AbstractDefinition
     /**
      * @inheritDoc
      */
-    public function getDefinition()
+    public function getDefinition($driver)
     {
         return [
             '$table->text(\'default_text\');',

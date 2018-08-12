@@ -27,7 +27,7 @@ class BlueprintString extends AbstractDefinition
     /**
      * @inheritDoc
      */
-    public function getDefinition()
+    public function getDefinition($driver)
     {
         return [
             '$table->string(\'default_string\');',

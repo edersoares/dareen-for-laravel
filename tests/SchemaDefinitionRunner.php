@@ -73,7 +73,10 @@ trait SchemaDefinitionRunner
         $definition->setConnection($connection);
         $definition->up();
 
-        $tableDefinitionExpected = $definition->getDefinition();
+        $tableDefinitionExpected = $definition->getDefinition(
+            $connection->getDriverName()
+        );
+
         $tableDefinitionCreated = $schema->getTableDefinition(
             $definition->getTableName()
         );

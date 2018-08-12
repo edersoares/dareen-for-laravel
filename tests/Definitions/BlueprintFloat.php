@@ -27,7 +27,7 @@ class BlueprintFloat extends AbstractDefinition
     /**
      * @inheritDoc
      */
-    public function getDefinition()
+    public function getDefinition($driver)
     {
         return [
             '$table->float(\'default_float\');',

@@ -35,7 +35,7 @@ class TableWithCommonColumns extends AbstractDefinition
     /**
      * @inheritDoc
      */
-    public function getDefinition()
+    public function getDefinition($driver)
     {
         return [
             '$table->boolean(\'common_boolean\');',
