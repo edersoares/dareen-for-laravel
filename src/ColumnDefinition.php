@@ -58,9 +58,10 @@ class ColumnDefinition
      */
     public function getDefinition()
     {
-        $definition = '$table->%s(\'%s\')%s;';
+        $definition = '$table->%s(\'%s\'%s)%s;';
 
         $modifiers = [];
+        $parameters = [];
 
         if (false === $this->column->getNotnull()) {
             $modifiers[] = '->nullable()';
@@ -74,10 +75,15 @@ class ColumnDefinition
             }
         }
 
+        if ($this->column->getAutoincrement()) {
+            $parameters[] = ', true';
+        }
+
         $definition = sprintf(
             $definition,
             $this->getTypeName(),
             $this->column->getName(),
+            implode('', $parameters),
             implode('', $modifiers)
         );
 

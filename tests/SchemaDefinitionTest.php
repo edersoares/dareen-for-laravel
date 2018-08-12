@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Tests\Definitions\BasicTableWithOneColumn;
+use Tests\Definitions\BlueprintInteger;
 use Tests\Definitions\TableWithCommonColumns;
 use Tests\Definitions\TableWithDefaultValueForColumn;
 use Tests\Definitions\TableWithNullableColumn;
@@ -64,6 +65,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new TableWithDefaultValueForColumn()
+        );
+    }
+
+    /**
+     * @see BlueprintInteger
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testBlueprintInteger()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new BlueprintInteger()
         );
     }
 }
