@@ -86,10 +86,13 @@ class ColumnDefinition
             }
         }
 
-        if ($type === 'string' && $this->column->getFixed()) {
-            $type = 'char';
+        if ($type === 'string') {
 
-            if ($length != 255) {
+            if ($this->column->getFixed()) {
+                $type = 'char';
+            }
+
+            if ($length > 0 && $length != 255) {
                 $parameters[] = ', ' . $length;
             }
         }

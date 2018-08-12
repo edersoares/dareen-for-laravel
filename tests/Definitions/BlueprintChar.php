@@ -45,6 +45,9 @@ class BlueprintChar extends AbstractDefinition
             '$table->char(\'char_all\', 123)->nullable()->default(\'yes/no\')->comment(\'Other comment in char\');',
         ];
 
+        // SQLite does not support char type, string length and comment for
+        // column.
+
         if ($driver === 'sqlite') {
             $definition = [
                 '$table->string(\'default_char\');',
