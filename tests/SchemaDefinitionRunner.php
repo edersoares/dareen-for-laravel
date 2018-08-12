@@ -81,9 +81,8 @@ trait SchemaDefinitionRunner
             $definition->getTableName()
         );
 
-        $this->assertArraySubset(
-            $tableDefinitionExpected,
-            $tableDefinitionCreated->getDefinition()
-        );
+        foreach ($tableDefinitionCreated->getDefinition() as $definition) {
+            $this->assertContains($definition, $tableDefinitionExpected);
+        }
     }
 }
