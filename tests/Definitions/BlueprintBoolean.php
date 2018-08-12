@@ -41,12 +41,12 @@ class BlueprintBoolean extends AbstractDefinition
         ];
 
         if ($driver === 'sqlite') {
-            return $definition;
+            $definition[] = '$table->boolean(\'boolean_comment\');';
+        } else {
+            $definition[] = '$table->boolean(\'boolean_comment\')->comment(\'Comment in boolean\');';
         }
 
-        return array_merge($definition, [
-            '$table->boolean(\'boolean_comment\')->comment(\'Comment in boolean\');',
-        ]);
+        return $definition;
     }
 
     /**
