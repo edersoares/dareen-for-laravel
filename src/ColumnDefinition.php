@@ -3,6 +3,7 @@
 namespace Dareen;
 
 use Doctrine\DBAL\Schema\Column;
+use Illuminate\Database\Schema\Builder;
 
 class ColumnDefinition
 {
@@ -61,15 +62,19 @@ class ColumnDefinition
         $definition = '$table->%s(\'%s\'%s)%s;';
 
         $type = $this->getTypeName();
+        $name = $this->column->getName();
+        $length = $this->column->getLength();
+        $comment = $this->column->getComment();
+        $default = $this->column->getDefault();
+        $autoIncrement = $this->column->getAutoincrement();
+        $notNull = $this->column->getNotnull();
 
         $modifiers = [];
         $parameters = [];
 
-        if (false === $this->column->getNotnull()) {
+        if (false === $notNull) {
             $modifiers[] = '->nullable()';
         }
-
-        $default = $this->column->getDefault();
 
         if (isset($default)) {
             if ($type === 'boolean' ) {
@@ -84,13 +89,15 @@ class ColumnDefinition
 
         if ($type === 'string' && $this->column->getFixed()) {
             $type = 'char';
+
+            if ($length != Builder::$defaultStringLength) {
+                $parameters[] = ', ' . $length;
+            }
         }
 
-        if ($this->column->getAutoincrement()) {
+        if ($autoIncrement) {
             $parameters[] = ', true';
         }
-
-        $comment = $this->column->getComment();
 
         if ($comment) {
             $modifiers[] = '->comment(\'' . $comment . '\')';
@@ -99,7 +106,7 @@ class ColumnDefinition
         $definition = sprintf(
             $definition,
             $type,
-            $this->column->getName(),
+            $name,
             implode('', $parameters),
             implode('', $modifiers)
         );
