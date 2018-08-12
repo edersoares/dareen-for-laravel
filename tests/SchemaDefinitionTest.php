@@ -6,6 +6,7 @@ use Tests\Definitions\BasicTableWithOneColumn;
 use Tests\Definitions\BlueprintBoolean;
 use Tests\Definitions\BlueprintChar;
 use Tests\Definitions\BlueprintDate;
+use Tests\Definitions\BlueprintDateTime;
 use Tests\Definitions\BlueprintDecimal;
 use Tests\Definitions\BlueprintDouble;
 use Tests\Definitions\BlueprintFloat;
@@ -199,6 +200,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new BlueprintDate()
+        );
+    }
+
+    /**
+     * @see BlueprintDateTime
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testBlueprintDateTime()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new BlueprintDateTime()
         );
     }
 }
