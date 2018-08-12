@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Tests\Definitions\BasicTableWithOneColumn;
+use Tests\Definitions\BlueprintFloat;
 use Tests\Definitions\BlueprintInteger;
 use Tests\Definitions\TableWithCommonColumns;
 use Tests\Definitions\TableWithDefaultValueForColumn;
@@ -79,6 +80,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new BlueprintInteger()
+        );
+    }
+
+    /**
+     * @see BlueprintFloat
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testBlueprintFloat()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new BlueprintFloat()
         );
     }
 }
