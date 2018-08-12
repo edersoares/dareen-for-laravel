@@ -6,6 +6,7 @@ use Tests\Definitions\BasicTableWithOneColumn;
 use Tests\Definitions\BlueprintDecimal;
 use Tests\Definitions\BlueprintFloat;
 use Tests\Definitions\BlueprintInteger;
+use Tests\Definitions\BlueprintString;
 use Tests\Definitions\TableWithCommonColumns;
 use Tests\Definitions\TableWithDefaultValueForColumn;
 use Tests\Definitions\TableWithNullableColumn;
@@ -109,6 +110,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new BlueprintDecimal()
+        );
+    }
+
+    /**
+     * @see BlueprintString()
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testBlueprintString()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new BlueprintString()
         );
     }
 }
