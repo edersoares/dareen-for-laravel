@@ -3,7 +3,6 @@
 namespace Dareen;
 
 use Doctrine\DBAL\Schema\Column;
-use Illuminate\Database\Schema\Builder;
 
 class ColumnDefinition
 {
@@ -90,7 +89,7 @@ class ColumnDefinition
         if ($type === 'string' && $this->column->getFixed()) {
             $type = 'char';
 
-            if ($length != Builder::$defaultStringLength) {
+            if ($length != 255) {
                 $parameters[] = ', ' . $length;
             }
         }
