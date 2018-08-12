@@ -5,6 +5,7 @@ namespace Tests;
 use Tests\Definitions\BasicTableWithOneColumn;
 use Tests\Definitions\BlueprintChar;
 use Tests\Definitions\BlueprintDecimal;
+use Tests\Definitions\BlueprintDouble;
 use Tests\Definitions\BlueprintFloat;
 use Tests\Definitions\BlueprintInteger;
 use Tests\Definitions\BlueprintString;
@@ -154,6 +155,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new BlueprintChar()
+        );
+    }
+
+    /**
+     * @see BlueprintDouble
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testBlueprintDouble()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new BlueprintDouble()
         );
     }
 }
