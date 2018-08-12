@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Tests\Definitions\BasicTableWithOneColumn;
+use Tests\Definitions\BlueprintBoolean;
 use Tests\Definitions\BlueprintChar;
 use Tests\Definitions\BlueprintDecimal;
 use Tests\Definitions\BlueprintDouble;
@@ -169,6 +170,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new BlueprintDouble()
+        );
+    }
+
+    /**
+     * @see BlueprintBoolean
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testBlueprintBoolean()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new BlueprintBoolean()
         );
     }
 }
