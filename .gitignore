@@ -1,1 +1,5 @@
 /vendor
+.phpunit.result.cache
+phpunit.mysql.xml
+phpunit.postgres.xml
+phpunit.sqlite.xml
