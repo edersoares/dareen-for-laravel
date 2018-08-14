@@ -13,6 +13,9 @@ class BlueprintText extends AbstractDefinition
     {
         $this->builder->create('table_text', function (Blueprint $table) {
             $table->text('default_text');
+            $table->text('text_nullable')->nullable();
+            $table->text('text_comment')->comment('Comment in text');
+            $table->text('text_all')->nullable()->comment('Other comment in text');
         });
     }
 
@@ -29,8 +32,20 @@ class BlueprintText extends AbstractDefinition
      */
     public function getDefinition($driver)
     {
+        if ($driver === 'sqlite') {
+            return [
+                '$table->text(\'default_text\');',
+                '$table->text(\'text_nullable\')->nullable();',
+                '$table->text(\'text_comment\');',
+                '$table->text(\'text_all\')->nullable();',
+            ];
+        }
+
         return [
             '$table->text(\'default_text\');',
+            '$table->text(\'text_nullable\')->nullable();',
+            '$table->text(\'text_comment\')->comment(\'Comment in text\');',
+            '$table->text(\'text_all\')->nullable()->comment(\'Other comment in text\');',
         ];
     }
 
