@@ -110,6 +110,21 @@ class ColumnDefinition
             }
         }
 
+        if ($name === 'double_total_places') {
+//            dd($this->column, $precision);
+        }
+
+        if ($type === 'float' && is_null($length) && $precision > 0) {
+
+            if ($precision > 0 && $precision != 8) {
+                $parameters[] = ', ' . $precision;
+            }
+
+            if ($scale > 0 && $scale != 2) {
+                $parameters[] = ', ' . $scale;
+            }
+        }
+
         if ($autoIncrement) {
             $parameters[] = ', true';
         }

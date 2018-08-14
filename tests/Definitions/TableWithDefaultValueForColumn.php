@@ -33,14 +33,18 @@ class TableWithDefaultValueForColumn extends AbstractDefinition
     public function getDefinition($driver)
     {
         $definitions = [
-            '$table->float(\'default_float\')->default(9876.54);',
             '$table->integer(\'default_integer\')->default(100);',
             '$table->string(\'default_string\')->default(\'string\');',
         ];
 
         if ($driver === 'sqlite') {
+            $definitions[] = '$table->float(\'default_float\', 10)->default(9876.54);';
             $definitions[] = '$table->decimal(\'default_decimal\', 10)->default(12.34);';
+        } elseif ($driver === 'pgsql') {
+            $definitions[] = '$table->float(\'default_float\', 10)->default(9876.54);';
+            $definitions[] = '$table->decimal(\'default_decimal\')->default(12.34);';
         } else {
+            $definitions[] = '$table->float(\'default_float\')->default(9876.54);';
             $definitions[] = '$table->decimal(\'default_decimal\')->default(12.34);';
         }
 

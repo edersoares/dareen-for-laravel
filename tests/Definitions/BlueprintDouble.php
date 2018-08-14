@@ -14,7 +14,7 @@ class BlueprintDouble extends AbstractDefinition
         $this->builder->create('table_double', function (Blueprint $table) {
             $table->double('default_double');
             $table->double('double_total', 7);
-            $table->double('double_total_places', 7, 5);
+            $table->double('double_total_places', 7, 3);
         });
     }
 
@@ -34,10 +34,18 @@ class BlueprintDouble extends AbstractDefinition
         // In all platforms double type is unsupported and is converted in
         // float type.
 
+        if ($driver === 'pgsql' || $driver === 'sqlite') {
+            return [
+                '$table->float(\'default_double\', 10);',
+                '$table->float(\'double_total\', 10);',
+                '$table->float(\'double_total_places\', 10);',
+            ];
+        }
+
         return [
             '$table->float(\'default_double\');',
             '$table->float(\'double_total\');',
-            '$table->float(\'double_total_places\');',
+            '$table->float(\'double_total_places\', 7, 3);',
         ];
     }
 

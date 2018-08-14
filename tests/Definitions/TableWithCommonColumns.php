@@ -54,6 +54,11 @@ class TableWithCommonColumns extends AbstractDefinition
             $definitions[] = '$table->decimal(\'common_decimal\');';
         }
 
+        if ($driver === 'pgsql' || $driver === 'sqlite') {
+            $definitions[] = '$table->float(\'common_float\', 10);';
+        }
+
+
         return $definitions;
     }
 
