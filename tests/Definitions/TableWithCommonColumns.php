@@ -37,17 +37,24 @@ class TableWithCommonColumns extends AbstractDefinition
      */
     public function getDefinition($driver)
     {
-        return [
+        $definitions = [
             '$table->boolean(\'common_boolean\');',
             '$table->date(\'common_date\');',
             '$table->dateTime(\'common_datetime\');',
-            '$table->decimal(\'common_decimal\');',
             '$table->float(\'common_float\');',
             '$table->integer(\'common_integer\');',
             '$table->string(\'common_string\');',
             '$table->text(\'common_text\');',
             '$table->time(\'common_time\');',
         ];
+
+        if ($driver === 'sqlite') {
+            $definitions[] = '$table->decimal(\'common_decimal\', 10);';
+        } else {
+            $definitions[] = '$table->decimal(\'common_decimal\');';
+        }
+
+        return $definitions;
     }
 
     /**

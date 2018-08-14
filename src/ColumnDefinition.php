@@ -67,6 +67,8 @@ class ColumnDefinition
         $default = $this->column->getDefault();
         $autoIncrement = $this->column->getAutoincrement();
         $notNull = $this->column->getNotnull();
+        $precision = $this->column->getPrecision();
+        $scale = $this->column->getScale();
 
         $modifiers = [];
         $parameters = [];
@@ -94,6 +96,17 @@ class ColumnDefinition
 
             if ($length > 0 && $length != 255) {
                 $parameters[] = ', ' . $length;
+            }
+        }
+
+        if ($type === 'decimal') {
+
+            if ($precision > 0 && $precision != 8) {
+                $parameters[] = ', ' . $precision;
+            }
+
+            if ($scale > 0 && $scale != 2) {
+                $parameters[] = ', ' . $scale;
             }
         }
 
