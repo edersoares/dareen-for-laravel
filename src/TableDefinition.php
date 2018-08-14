@@ -3,6 +3,7 @@
 namespace Dareen;
 
 use Doctrine\DBAL\Schema\Column;
+use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Schema\Table;
 
 class TableDefinition
@@ -34,6 +35,35 @@ class TableDefinition
     }
 
     /**
+     * Return the unique index definition.
+     *
+     * @param Index $index
+     *
+     * @return array
+     */
+    private function getUniqueDefinition(Index $index)
+    {
+        $definition = '$table->unique(%s);';
+
+        $columns = $index->getColumns();
+
+        if (count($columns) > 1) {
+            $columns = '[\'' . implode('\', \'', $columns) . '\']';
+        } else {
+            $columns = '\'' . $columns[0] . '\'';
+        }
+
+        $definition = sprintf(
+            $definition,
+            $columns
+        );
+
+        return [
+            $definition
+        ];
+    }
+
+    /**
      * Return the columns definitions.
      *
      * @return ColumnDefinition[]
@@ -53,11 +83,18 @@ class TableDefinition
     public function getDefinition()
     {
         $columns = [];
+        $indexes = [];
 
         foreach ($this->getColumnsDefinitions() as $columnDefinition) {
             $columns = array_merge($columns, $columnDefinition->getDefinition());
         }
 
-        return array_values($columns);
+        foreach ((array) $this->table->getIndexes() as $index) {
+            if ($index->isUnique()) {
+                $indexes = array_merge($indexes, $this->getUniqueDefinition($index));
+            }
+        }
+
+        return array_merge($columns, $indexes);
     }
 }

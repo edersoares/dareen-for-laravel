@@ -17,6 +17,7 @@ use Tests\Definitions\BlueprintTime;
 use Tests\Definitions\TableWithCommonColumns;
 use Tests\Definitions\TableWithDefaultValueForColumn;
 use Tests\Definitions\TableWithNullableColumn;
+use Tests\Definitions\TableWithUniqueColumn;
 
 class SchemaDefinitionTest extends TestCase
 {
@@ -75,6 +76,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new TableWithDefaultValueForColumn()
+        );
+    }
+
+    /**
+     * @see TableWithUniqueColumn
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testWithUniqueColumn()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new TableWithUniqueColumn()
         );
     }
 
