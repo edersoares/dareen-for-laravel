@@ -16,6 +16,7 @@ use Tests\Definitions\BlueprintText;
 use Tests\Definitions\BlueprintTime;
 use Tests\Definitions\TableWithCommonColumns;
 use Tests\Definitions\TableWithDefaultValueForColumn;
+use Tests\Definitions\TableWithIndexColumn;
 use Tests\Definitions\TableWithNullableColumn;
 use Tests\Definitions\TableWithUniqueColumn;
 
@@ -76,6 +77,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new TableWithDefaultValueForColumn()
+        );
+    }
+
+    /**
+     * @see TableWithIndexColumn
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testWithIndexColumn()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new TableWithIndexColumn()
         );
     }
 

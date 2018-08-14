@@ -35,6 +35,35 @@ class TableDefinition
     }
 
     /**
+     * Return the index definition.
+     *
+     * @param Index $index
+     *
+     * @return array
+     */
+    private function getIndexDefinition(Index $index)
+    {
+        $definition = '$table->index(%s);';
+
+        $columns = $index->getColumns();
+
+        if (count($columns) > 1) {
+            $columns = '[\'' . implode('\', \'', $columns) . '\']';
+        } else {
+            $columns = '\'' . $columns[0] . '\'';
+        }
+
+        $definition = sprintf(
+            $definition,
+            $columns
+        );
+
+        return [
+            $definition
+        ];
+    }
+
+    /**
      * Return the unique index definition.
      *
      * @param Index $index
@@ -90,9 +119,15 @@ class TableDefinition
         }
 
         foreach ((array) $this->table->getIndexes() as $index) {
+
             if ($index->isUnique()) {
                 $indexes = array_merge($indexes, $this->getUniqueDefinition($index));
             }
+
+            if ($index->isSimpleIndex()) {
+                $indexes = array_merge($indexes, $this->getIndexDefinition($index));
+            }
+
         }
 
         return array_merge($columns, $indexes);
