@@ -3,6 +3,7 @@
 namespace Dareen;
 
 use Doctrine\DBAL\Schema\Column;
+use Doctrine\DBAL\Schema\ForeignKeyConstraint;
 use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Schema\Table;
 
@@ -35,6 +36,18 @@ class TableDefinition
     }
 
     /**
+     * Return all foreign keys.
+     *
+     * @return array
+     */
+    private function getForeignKeys()
+    {
+        return collect($this->table->getForeignKeys())->map(function (ForeignKeyConstraint $constraint) {
+            return $constraint->getColumns();
+        })->toArray();
+    }
+
+    /**
      * Return the index definition.
      *
      * @param Index $index
@@ -46,6 +59,10 @@ class TableDefinition
         $definition = '$table->index(%s);';
 
         $columns = $index->getColumns();
+
+        if (in_array($columns, $this->getForeignKeys())) {
+            return [];
+        }
 
         if (count($columns) > 1) {
             $columns = '[\'' . implode('\', \'', $columns) . '\']';
