@@ -15,6 +15,7 @@ use Tests\Definitions\BlueprintString;
 use Tests\Definitions\BlueprintText;
 use Tests\Definitions\BlueprintTime;
 use Tests\Definitions\TableWithCommonColumns;
+use Tests\Definitions\TableWithCompositePrimaryKey;
 use Tests\Definitions\TableWithDefaultValueForColumn;
 use Tests\Definitions\TableWithIndexColumn;
 use Tests\Definitions\TableWithNullableColumn;
@@ -106,6 +107,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new TableWithSinglePrimaryKey()
+        );
+    }
+
+    /**
+     * @see TableWithCompositePrimaryKey
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testWithCompositePrimaryKey()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new TableWithCompositePrimaryKey()
         );
     }
 
