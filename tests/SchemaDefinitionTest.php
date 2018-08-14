@@ -18,6 +18,7 @@ use Tests\Definitions\TableWithCommonColumns;
 use Tests\Definitions\TableWithDefaultValueForColumn;
 use Tests\Definitions\TableWithIndexColumn;
 use Tests\Definitions\TableWithNullableColumn;
+use Tests\Definitions\TableWithSinglePrimaryKey;
 use Tests\Definitions\TableWithUniqueColumn;
 
 class SchemaDefinitionTest extends TestCase
@@ -91,6 +92,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new TableWithIndexColumn()
+        );
+    }
+
+    /**
+     * @see TableWithSinglePrimaryKey
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testWithSinglePrimaryKey()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new TableWithSinglePrimaryKey()
         );
     }
 

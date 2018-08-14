@@ -64,6 +64,35 @@ class TableDefinition
     }
 
     /**
+     * Return the primary definition.
+     *
+     * @param Index $index
+     *
+     * @return array
+     */
+    private function getPrimaryDefinition(Index $index)
+    {
+        $definition = '$table->primary(%s);';
+
+        $columns = $index->getColumns();
+
+        if (count($columns) > 1) {
+            $columns = '[\'' . implode('\', \'', $columns) . '\']';
+        } else {
+            $columns = '\'' . $columns[0] . '\'';
+        }
+
+        $definition = sprintf(
+            $definition,
+            $columns
+        );
+
+        return [
+            $definition
+        ];
+    }
+
+    /**
      * Return the unique index definition.
      *
      * @param Index $index
@@ -120,11 +149,11 @@ class TableDefinition
 
         foreach ((array) $this->table->getIndexes() as $index) {
 
-            if ($index->isUnique()) {
+            if ($index->isPrimary()) {
+                $indexes = array_merge($indexes, $this->getPrimaryDefinition($index));
+            } elseif ($index->isUnique()) {
                 $indexes = array_merge($indexes, $this->getUniqueDefinition($index));
-            }
-
-            if ($index->isSimpleIndex()) {
+            } elseif ($index->isSimpleIndex()) {
                 $indexes = array_merge($indexes, $this->getIndexDefinition($index));
             }
 
