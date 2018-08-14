@@ -41,7 +41,6 @@ class TableWithCommonColumns extends AbstractDefinition
             '$table->boolean(\'common_boolean\');',
             '$table->date(\'common_date\');',
             '$table->dateTime(\'common_datetime\');',
-            '$table->float(\'common_float\');',
             '$table->integer(\'common_integer\');',
             '$table->string(\'common_string\');',
             '$table->text(\'common_text\');',
@@ -56,6 +55,8 @@ class TableWithCommonColumns extends AbstractDefinition
 
         if ($driver === 'pgsql' || $driver === 'sqlite') {
             $definitions[] = '$table->float(\'common_float\', 10);';
+        } else {
+            $definitions[] = '$table->float(\'common_float\');';
         }
 
 

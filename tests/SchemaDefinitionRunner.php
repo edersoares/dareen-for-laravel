@@ -81,7 +81,12 @@ trait SchemaDefinitionRunner
             $definition->getTableName()
         );
 
-        foreach ($tableDefinitionCreated->getDefinition() as $definition) {
+        $definitions = $tableDefinitionCreated->getDefinition();
+        $total = count($tableDefinitionExpected);
+
+        $this->assertCount($total, $definitions);
+
+        foreach ($definitions as $definition) {
             $this->assertContains($definition, $tableDefinitionExpected);
         }
     }
