@@ -13,6 +13,10 @@ class TableWithUniqueColumn extends AbstractDefinition
     {
         $this->builder->create('unique', function (Blueprint $table) {
             $table->integer('unique_integer')->unique();
+            $table->integer('unique_one');
+            $table->integer('unique_two');
+            $table->integer('unique_three');
+            $table->unique(['unique_one', 'unique_two', 'unique_three']);
         });
     }
 
@@ -31,7 +35,11 @@ class TableWithUniqueColumn extends AbstractDefinition
     {
         return [
             '$table->integer(\'unique_integer\');',
+            '$table->integer(\'unique_one\');',
+            '$table->integer(\'unique_two\');',
+            '$table->integer(\'unique_three\');',
             '$table->unique(\'unique_integer\');',
+            '$table->unique([\'unique_one\', \'unique_two\', \'unique_three\']);',
         ];
     }
 
