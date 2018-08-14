@@ -32,21 +32,20 @@ class BlueprintText extends AbstractDefinition
      */
     public function getDefinition($driver)
     {
-        if ($driver === 'sqlite') {
-            return [
-                '$table->text(\'default_text\');',
-                '$table->text(\'text_nullable\')->nullable();',
-                '$table->text(\'text_comment\');',
-                '$table->text(\'text_all\')->nullable();',
-            ];
-        }
-
-        return [
+        $definitions = [
             '$table->text(\'default_text\');',
             '$table->text(\'text_nullable\')->nullable();',
-            '$table->text(\'text_comment\')->comment(\'Comment in text\');',
-            '$table->text(\'text_all\')->nullable()->comment(\'Other comment in text\');',
         ];
+
+        if ($driver === 'sqlite') {
+            $definitions[] = '$table->text(\'text_comment\');';
+            $definitions[] = '$table->text(\'text_all\')->nullable();';
+        } else {
+            $definitions[] = '$table->text(\'text_comment\')->comment(\'Comment in text\');';
+            $definitions[] = '$table->text(\'text_all\')->nullable()->comment(\'Other comment in text\');';
+        }
+
+        return $definitions;
     }
 
     /**

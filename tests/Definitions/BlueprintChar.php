@@ -35,21 +35,11 @@ class BlueprintChar extends AbstractDefinition
      */
     public function getDefinition($driver)
     {
-        $definition = [
-            '$table->char(\'default_char\');',
-            '$table->char(\'char_length\', 10);',
-            '$table->char(\'char_max_length\');',
-            '$table->char(\'char_nullable\')->nullable();',
-            '$table->char(\'char_value\', 11)->default(\'tests\');',
-            '$table->char(\'char_comment\')->comment(\'Comment in char\');',
-            '$table->char(\'char_all\', 123)->nullable()->default(\'yes/no\')->comment(\'Other comment in char\');',
-        ];
-
         // SQLite does not support char type, string length and comment for
         // column.
 
         if ($driver === 'sqlite') {
-            $definition = [
+            return [
                 '$table->string(\'default_char\');',
                 '$table->string(\'char_length\');',
                 '$table->string(\'char_max_length\');',
@@ -60,7 +50,15 @@ class BlueprintChar extends AbstractDefinition
             ];
         }
 
-        return $definition;
+        return [
+            '$table->char(\'default_char\');',
+            '$table->char(\'char_length\', 10);',
+            '$table->char(\'char_max_length\');',
+            '$table->char(\'char_nullable\')->nullable();',
+            '$table->char(\'char_value\', 11)->default(\'tests\');',
+            '$table->char(\'char_comment\')->comment(\'Comment in char\');',
+            '$table->char(\'char_all\', 123)->nullable()->default(\'yes/no\')->comment(\'Other comment in char\');',
+        ];
     }
 
     /**

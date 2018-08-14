@@ -35,16 +35,6 @@ class BlueprintDecimal extends AbstractDefinition
      */
     public function getDefinition($driver)
     {
-        $definitions = [
-            '$table->decimal(\'default_decimal\');',
-            '$table->decimal(\'decimal_total\', 10);',
-            '$table->decimal(\'decimal_total_places\', 11, 3);',
-            '$table->decimal(\'decimal_nullable\')->nullable();',
-            '$table->decimal(\'decimal_value\')->default(123.45);',
-            '$table->decimal(\'decimal_comment\')->comment(\'Comment in decimal\');',
-            '$table->decimal(\'decimal_all\', 12, 4)->nullable()->default(9876.5432)->comment(\'Other comment in decimal\');',
-        ];
-
         if ($driver === 'sqlite') {
             return [
                 '$table->decimal(\'default_decimal\', 10);',
@@ -57,7 +47,15 @@ class BlueprintDecimal extends AbstractDefinition
             ];
         }
 
-        return $definitions;
+        return [
+            '$table->decimal(\'default_decimal\');',
+            '$table->decimal(\'decimal_total\', 10);',
+            '$table->decimal(\'decimal_total_places\', 11, 3);',
+            '$table->decimal(\'decimal_nullable\')->nullable();',
+            '$table->decimal(\'decimal_value\')->default(123.45);',
+            '$table->decimal(\'decimal_comment\')->comment(\'Comment in decimal\');',
+            '$table->decimal(\'decimal_all\', 12, 4)->nullable()->default(9876.5432)->comment(\'Other comment in decimal\');',
+        ];
     }
 
     /**

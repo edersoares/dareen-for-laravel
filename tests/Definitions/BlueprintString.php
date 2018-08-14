@@ -35,31 +35,27 @@ class BlueprintString extends AbstractDefinition
      */
     public function getDefinition($driver)
     {
-        $definition = [
+        $definitions = [
             '$table->string(\'default_string\');',
-            '$table->string(\'string_length\', 10);',
             '$table->string(\'string_max_length\');',
             '$table->string(\'string_nullable\')->nullable();',
-            '$table->string(\'string_value\', 111)->default(\'Tests using string\');',
-            '$table->string(\'string_comment\')->comment(\'Comment in string\');',
-            '$table->string(\'string_all\', 123)->nullable()->default(\'yes/no\')->comment(\'Other comment in string\');',
         ];
 
         // SQLite does not support string length and comment for column.
 
         if ($driver === 'sqlite') {
-            $definition = [
-                '$table->string(\'default_string\');',
-                '$table->string(\'string_length\');',
-                '$table->string(\'string_max_length\');',
-                '$table->string(\'string_nullable\')->nullable();',
-                '$table->string(\'string_value\')->default(\'Tests using string\');',
-                '$table->string(\'string_comment\');',
-                '$table->string(\'string_all\')->nullable()->default(\'yes/no\');',
-            ];
+            $definitions[] = '$table->string(\'string_length\');';
+            $definitions[] = '$table->string(\'string_comment\');';
+            $definitions[] = '$table->string(\'string_value\')->default(\'Tests using string\');';
+            $definitions[] = '$table->string(\'string_all\')->nullable()->default(\'yes/no\');';
+        } else {
+            $definitions[] = '$table->string(\'string_length\', 10);';
+            $definitions[] = '$table->string(\'string_comment\')->comment(\'Comment in string\');';
+            $definitions[] = '$table->string(\'string_value\', 111)->default(\'Tests using string\');';
+            $definitions[] = '$table->string(\'string_all\', 123)->nullable()->default(\'yes/no\')->comment(\'Other comment in string\');';
         }
 
-        return $definition;
+        return $definitions;
     }
 
     /**

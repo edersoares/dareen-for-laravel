@@ -34,29 +34,24 @@ class BlueprintInteger extends AbstractDefinition
      */
     public function getDefinition($driver)
     {
-        $definition = [
+        $definitions = [
             '$table->integer(\'default_integer\');',
             '$table->integer(\'integer_autoincrement\', true);',
             '$table->integer(\'integer_nullable\')->nullable();',
             '$table->integer(\'integer_value\')->default(12345);',
-            '$table->integer(\'integer_comment\')->comment(\'Comment in integer\');',
-            '$table->integer(\'integer_all\')->nullable()->default(111)->comment(\'Other comment in integer\');',
         ];
 
         // SQLite does not support comment for column.
 
         if ($driver === 'sqlite') {
-            $definition = [
-                '$table->integer(\'default_integer\');',
-                '$table->integer(\'integer_autoincrement\', true);',
-                '$table->integer(\'integer_nullable\')->nullable();',
-                '$table->integer(\'integer_value\')->default(12345);',
-                '$table->integer(\'integer_comment\');',
-                '$table->integer(\'integer_all\')->nullable()->default(111);',
-            ];
+            $definitions[] = '$table->integer(\'integer_comment\');';
+            $definitions[] = '$table->integer(\'integer_all\')->nullable()->default(111);';
+        } else {
+            $definitions[] = '$table->integer(\'integer_comment\')->comment(\'Comment in integer\');';
+            $definitions[] = '$table->integer(\'integer_all\')->nullable()->default(111)->comment(\'Other comment in integer\');';
         }
 
-        return $definition;
+        return $definitions;
     }
 
     /**
