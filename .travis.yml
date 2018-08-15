@@ -5,6 +5,8 @@ php:
 services:
   - mysql
   - postgresql
+addons:
+  postgresql: "9.5"
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS dareen;'
   - psql -c 'CREATE DATABASE IF NOT EXISTS dareen;' -U postgres
