@@ -9,7 +9,7 @@ addons:
   postgresql: "9.5"
 before_install:
   - mysql -e 'CREATE DATABASE IF NOT EXISTS dareen;'
-  - psql -c 'CREATE DATABASE IF NOT EXISTS dareen;' -U postgres
+  - psql -c 'CREATE DATABASE dareen;' -U postgres
 before_script: composer install
 after_script:
   - DB_CONNECTION=mysql DB_HOST=127.0.0.1 DB_PORT=3306 DB_DATABASE=dareen DB_USERNAME=travis DB_PASSWORD= vendor/bin/phpunit
