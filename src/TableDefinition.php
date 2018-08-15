@@ -147,7 +147,7 @@ class TableDefinition
      */
     private function getForeignDefinition(ForeignKeyConstraint $foreignKey)
     {
-        $definition = '$table->foreign(%s)->references(%s)->on(%s);';
+        $definition = '$table->foreign(%s)->references(%s)->on(%s)%s;';
 
         $columns = $foreignKey->getColumns();
         $columnsForeign = $foreignKey->getForeignColumns();
@@ -166,11 +166,23 @@ class TableDefinition
             $columnsForeign = '\'' . $columnsForeign[0] . '\'';
         }
 
+        $params = [];
+        $options = $foreignKey->getOptions();
+
+        if (isset($options['onUpdate'])) {
+            $params[] = '->onUpdate(\'' . mb_strtolower($options['onUpdate']) . '\')';
+        }
+
+        if (isset($options['onDelete'])) {
+            $params[] = '->onDelete(\'' . mb_strtolower($options['onDelete']) . '\')';
+        }
+
         $definition = sprintf(
             $definition,
             $columns,
             $columnsForeign,
-            $table
+            $table,
+            implode('', $params)
         );
 
         return [
