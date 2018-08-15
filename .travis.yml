@@ -2,4 +2,10 @@ language: php
 php:
   - '7.1'
   - '7.2'
+services:
+  - mysql
+before_install:
+  - mysql -e 'CREATE DATABASE IF NOT EXISTS dareen;'
 before_script: composer install
+after_script:
+  - DB_CONNECTION=mysql DB_HOST=127.0.0.1 DB_PORT=3306 DB_DATABASE=dareen DB_USERNAME=travis DB_PASSWORD= vendor/bin/phpunit
