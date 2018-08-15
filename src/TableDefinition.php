@@ -139,6 +139,46 @@ class TableDefinition
     }
 
     /**
+     * Return the foreign definition.
+     *
+     * @param ForeignKeyConstraint $foreignKey
+     *
+     * @return array
+     */
+    private function getForeignDefinition(ForeignKeyConstraint $foreignKey)
+    {
+        $definition = '$table->foreign(%s)->references(%s)->on(%s);';
+
+        $columns = $foreignKey->getColumns();
+        $columnsForeign = $foreignKey->getForeignColumns();
+        $table = $foreignKey->getForeignTableName();
+        $table = "'{$table}'";
+
+        if (count($columns) > 1) {
+            $columns = '[\'' . implode('\', \'', $columns) . '\']';
+        } else {
+            $columns = '\'' . $columns[0] . '\'';
+        }
+
+        if (count($columnsForeign) > 1) {
+            $columnsForeign = '[\'' . implode('\', \'', $columnsForeign) . '\']';
+        } else {
+            $columnsForeign = '\'' . $columnsForeign[0] . '\'';
+        }
+
+        $definition = sprintf(
+            $definition,
+            $columns,
+            $columnsForeign,
+            $table
+        );
+
+        return [
+            $definition
+        ];
+    }
+
+    /**
      * Return the columns definitions.
      *
      * @return ColumnDefinition[]
@@ -159,6 +199,7 @@ class TableDefinition
     {
         $columns = [];
         $indexes = [];
+        $foreign = [];
 
         foreach ($this->getColumnsDefinitions() as $columnDefinition) {
             $columns = array_merge($columns, $columnDefinition->getDefinition());
@@ -176,6 +217,10 @@ class TableDefinition
 
         }
 
-        return array_merge($columns, $indexes);
+        foreach ((array) $this->table->getForeignKeys() as $foreignKey) {
+            $indexes = array_merge($indexes, $this->getForeignDefinition($foreignKey));
+        }
+
+        return array_merge($columns, $indexes, $foreign);
     }
 }

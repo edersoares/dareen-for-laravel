@@ -19,6 +19,7 @@ use Tests\Definitions\TableWithCompositePrimaryKey;
 use Tests\Definitions\TableWithDefaultValueForColumn;
 use Tests\Definitions\TableWithIndexColumn;
 use Tests\Definitions\TableWithNullableColumn;
+use Tests\Definitions\TableWithSingleForeignKey;
 use Tests\Definitions\TableWithSinglePrimaryKey;
 use Tests\Definitions\TableWithUniqueColumn;
 
@@ -121,6 +122,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new TableWithCompositePrimaryKey()
+        );
+    }
+
+    /**
+     * @see TableWithSingleForeignKey
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testWithSingleForeignKey()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new TableWithSingleForeignKey()
         );
     }
 
