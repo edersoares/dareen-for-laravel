@@ -197,9 +197,13 @@ class TableDefinition
      */
     public function getColumnsDefinitions()
     {
-        return array_map(function (Column $column) {
-            return new ColumnDefinition($column, $this);
-        }, $this->table->getColumns());
+        $columns = [];
+
+        foreach ($this->table->getColumns() as $column) {
+            $columns[] = new ColumnDefinition($column, $this);
+        }
+
+        return $columns;
     }
 
     /**
@@ -218,7 +222,6 @@ class TableDefinition
         }
 
         foreach ((array) $this->table->getIndexes() as $index) {
-
             if ($index->isPrimary()) {
                 $indexes = array_merge($indexes, $this->getPrimaryDefinition($index));
             } elseif ($index->isUnique()) {
@@ -226,13 +229,12 @@ class TableDefinition
             } elseif ($index->isSimpleIndex()) {
                 $indexes = array_merge($indexes, $this->getIndexDefinition($index));
             }
-
         }
 
         foreach ((array) $this->table->getForeignKeys() as $foreignKey) {
             $indexes = array_merge($indexes, $this->getForeignDefinition($foreignKey));
         }
-
+        
         return array_merge($columns, $indexes, $foreign);
     }
 }
