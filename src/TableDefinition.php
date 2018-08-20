@@ -2,7 +2,6 @@
 
 namespace Dareen;
 
-use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
 use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Schema\Table;
@@ -42,9 +41,13 @@ class TableDefinition
      */
     private function getForeignKeys()
     {
-        return collect($this->table->getForeignKeys())->map(function (ForeignKeyConstraint $constraint) {
-            return $constraint->getColumns();
-        })->toArray();
+        $foreignKeys = [];
+
+        foreach ($this->table->getForeignKeys() as $foreignKey) {
+            $foreignKeys[] = $foreignKey->getColumns();
+        }
+
+        return $foreignKeys;
     }
 
     /**
