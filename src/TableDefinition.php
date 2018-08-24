@@ -51,6 +51,32 @@ class TableDefinition
     }
 
     /**
+     * Create index definition (primary, unique or simple index).
+     *
+     * @param string $definition
+     * @param array $columns
+     *
+     * @return array
+     */
+    private function createIndexDefinition($definition, $columns)
+    {
+        if (count($columns) > 1) {
+            $columns = '[\'' . implode('\', \'', $columns) . '\']';
+        } else {
+            $columns = '\'' . $columns[0] . '\'';
+        }
+
+        $definition = sprintf(
+            $definition,
+            $columns
+        );
+
+        return [
+            $definition
+        ];
+    }
+
+    /**
      * Return the index definition.
      *
      * @param Index $index
@@ -67,20 +93,7 @@ class TableDefinition
             return [];
         }
 
-        if (count($columns) > 1) {
-            $columns = '[\'' . implode('\', \'', $columns) . '\']';
-        } else {
-            $columns = '\'' . $columns[0] . '\'';
-        }
-
-        $definition = sprintf(
-            $definition,
-            $columns
-        );
-
-        return [
-            $definition
-        ];
+        return $this->createIndexDefinition($definition, $columns);
     }
 
     /**
@@ -96,20 +109,7 @@ class TableDefinition
 
         $columns = $index->getColumns();
 
-        if (count($columns) > 1) {
-            $columns = '[\'' . implode('\', \'', $columns) . '\']';
-        } else {
-            $columns = '\'' . $columns[0] . '\'';
-        }
-
-        $definition = sprintf(
-            $definition,
-            $columns
-        );
-
-        return [
-            $definition
-        ];
+        return $this->createIndexDefinition($definition, $columns);
     }
 
     /**
@@ -125,20 +125,7 @@ class TableDefinition
 
         $columns = $index->getColumns();
 
-        if (count($columns) > 1) {
-            $columns = '[\'' . implode('\', \'', $columns) . '\']';
-        } else {
-            $columns = '\'' . $columns[0] . '\'';
-        }
-
-        $definition = sprintf(
-            $definition,
-            $columns
-        );
-
-        return [
-            $definition
-        ];
+        return $this->createIndexDefinition($definition, $columns);
     }
 
     /**
