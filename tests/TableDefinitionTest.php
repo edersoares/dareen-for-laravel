@@ -70,4 +70,28 @@ class TableDefinitionTest extends TestCase
             $columnDefinition->getDefinition()
         );
     }
+
+    /**
+     * testGetDefinitionMethod.
+     *
+     * @see TableDefinition::getDefinition()
+     *
+     * @return void
+     */
+    public function testGetTableNameMethod()
+    {
+        $table = $this->createMock(Table::class);
+        $schemaDefinition = $this->createMock(SchemaDefinition::class);
+
+        $table->method('getName')->willReturn('table-name');
+
+        $tableDefinition = new TableDefinition(
+            $table, $schemaDefinition
+        );
+
+        $this->assertEquals(
+            'table-name',
+            $tableDefinition->getTableName()
+        );
+    }
 }

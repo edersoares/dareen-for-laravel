@@ -227,4 +227,14 @@ class TableDefinition
         
         return array_merge($columns, $indexes, $foreign);
     }
+
+    /**
+     * Return table name.
+     *
+     * @return string
+     */
+    public function getTableName()
+    {
+        return $this->table->getName();
+    }
 }
