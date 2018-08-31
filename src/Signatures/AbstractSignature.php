@@ -2,8 +2,12 @@
 
 namespace Dareen\Signatures;
 
+use Dareen\Support\ValueConverter;
+
 abstract class AbstractSignature
 {
+    use ValueConverter;
+
     /**
      * Signature name.
      *
@@ -58,42 +62,6 @@ abstract class AbstractSignature
         }, $this->arguments);
 
         return implode(', ', $arguments);
-    }
-
-    /**
-     * Convert the value to its respective value type.
-     *
-     * @param mixed $value
-     *
-     * @return string
-     */
-    protected function convertValue($value)
-    {
-        if (is_bool($value)) {
-            return $value ? 'true' : 'false';
-        }
-
-        if (is_null($value)) {
-            return 'null';
-        }
-
-        if (is_numeric($value)) {
-            return $value;
-        }
-
-        if (is_string($value)) {
-            return "'{$value}'";
-        }
-
-        if (is_array($value)) {
-            $convertedValues = array_map(function ($value) {
-                return $this->convertValue($value);
-            }, $value);
-
-            return '[' . implode(', ', $convertedValues) . ']';
-        }
-
-        return '';
     }
 
     /**
