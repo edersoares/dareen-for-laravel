@@ -90,7 +90,7 @@ abstract class AbstractSignature
                 return $this->convertValue($value);
             }, $value);
 
-            return '[' . implode(', ', $convertedValues) . ']';
+            return implode(', ', $convertedValues);
         }
 
         return '';
