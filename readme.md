@@ -3,7 +3,7 @@
 Dareen is a database reverse engineering for Laravel.
 
 [![Build Status](https://travis-ci.org/edersoares/dareen.svg?branch=master)](https://travis-ci.org/edersoares/dareen)
-![Licence](https://img.shields.io/dub/l/vibe-d.svg)
+[![Licence](https://img.shields.io/dub/l/vibe-d.svg)](https://github.com/edersoares/dareen/blob/master/license.md)
 
 ### Installation
 
