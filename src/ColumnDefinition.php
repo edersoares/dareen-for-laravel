@@ -2,6 +2,9 @@
 
 namespace Dareen;
 
+use Dareen\Signatures\CommentSignature;
+use Dareen\Signatures\DefaultSignature;
+use Dareen\Signatures\NullableSignature;
 use Doctrine\DBAL\Schema\Column;
 
 class ColumnDefinition
@@ -30,6 +33,36 @@ class ColumnDefinition
     {
         $this->column = $column;
         $this->table = $table;
+    }
+
+    /**
+     * Return column modifiers.
+     *
+     * @return array
+     */
+    private function getColumnModifiers()
+    {
+        $modifiers = [];
+
+        $comment = $this->column->getComment();
+        $default = $this->column->getDefault();
+        $notNull = $this->column->getNotnull();
+
+        if (false === $notNull) {
+            $modifiers[] = new NullableSignature();
+        }
+
+        if (isset($default)) {
+            $modifiers[] = new DefaultSignature(
+                $this->getTypeName() === 'boolean' ? boolval($default) : $default
+            );
+        }
+
+        if ($comment) {
+            $modifiers[] = new CommentSignature($comment);
+        }
+
+        return $modifiers;
     }
 
     /**
@@ -63,30 +96,11 @@ class ColumnDefinition
         $type = $this->getTypeName();
         $name = $this->column->getName();
         $length = $this->column->getLength();
-        $comment = $this->column->getComment();
-        $default = $this->column->getDefault();
         $autoIncrement = $this->column->getAutoincrement();
-        $notNull = $this->column->getNotnull();
         $precision = $this->column->getPrecision();
         $scale = $this->column->getScale();
 
-        $modifiers = [];
         $parameters = [];
-
-        if (false === $notNull) {
-            $modifiers[] = '->nullable()';
-        }
-
-        if (isset($default)) {
-            if ($type === 'boolean' ) {
-                $value = $default ? 'true' : 'false';
-                $modifiers[] = '->default(' . $value . ')';
-            } elseif (is_numeric($default)) {
-                $modifiers[] = '->default(' . $default . ')';
-            } elseif (is_string($default)) {
-                $modifiers[] = '->default(\'' . $default . '\')';
-            }
-        }
 
         if ($type === 'string') {
 
@@ -125,16 +139,12 @@ class ColumnDefinition
             $parameters[] = ', true';
         }
 
-        if ($comment) {
-            $modifiers[] = '->comment(\'' . $comment . '\')';
-        }
-
         $definition = sprintf(
             $definition,
             $type,
             $name,
             implode('', $parameters),
-            implode('', $modifiers)
+            implode('', $this->getColumnModifiers())
         );
 
         return [
