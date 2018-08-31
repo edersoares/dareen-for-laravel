@@ -21,7 +21,7 @@ class CharSignature extends AbstractSignature
     {
         $this->addArgument($name);
 
-        if ($length) {
+        if ($length && $length !== 255) {
             $this->addArgument($length);
         }
     }

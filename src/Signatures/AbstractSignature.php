@@ -69,16 +69,16 @@ abstract class AbstractSignature
      */
     protected function convertValue($value)
     {
-        if (is_numeric($value)) {
-            return $value;
+        if (is_bool($value)) {
+            return $value ? 'true' : 'false';
         }
 
         if (is_null($value)) {
             return 'null';
         }
 
-        if (is_bool($value)) {
-            return $value ? 'true' : 'false';
+        if (is_numeric($value)) {
+            return $value;
         }
 
         if (is_string($value)) {

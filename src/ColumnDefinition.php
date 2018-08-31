@@ -2,9 +2,15 @@
 
 namespace Dareen;
 
+use Dareen\Signatures\AbstractSignature;
+use Dareen\Signatures\CharSignature;
 use Dareen\Signatures\CommentSignature;
+use Dareen\Signatures\DecimalSignature;
 use Dareen\Signatures\DefaultSignature;
+use Dareen\Signatures\FloatSignature;
 use Dareen\Signatures\NullableSignature;
+use Dareen\Signatures\Signature;
+use Dareen\Signatures\StringSignature;
 use Doctrine\DBAL\Schema\Column;
 
 class ColumnDefinition
@@ -33,6 +39,43 @@ class ColumnDefinition
     {
         $this->column = $column;
         $this->table = $table;
+    }
+
+    /**
+     * Return column signature.
+     *
+     * @return AbstractSignature
+     */
+    public function getColumnSignature()
+    {
+        $type = $this->getTypeName();
+        $name = $this->column->getName();
+        $length = $this->column->getLength();
+        $autoIncrement = $this->column->getAutoincrement();
+        $precision = $this->column->getPrecision();
+        $scale = $this->column->getScale();
+
+        if ($this->isStringType()) {
+            return new StringSignature($name, $length);
+        }
+
+        if ($this->isCharType()) {
+            return new CharSignature($name, $length);
+        }
+
+        if ($this->isDecimalType()) {
+            return new DecimalSignature($name, $precision, $scale);
+        }
+
+        if ($this->isFloatType() && is_null($length) && $precision > 0) {
+            return new FloatSignature($name, $precision, $scale);
+        }
+
+        if ($autoIncrement) {
+            return new Signature($type, [$name, true]);
+        }
+
+        return new Signature($type, [$name]);
     }
 
     /**
@@ -143,60 +186,11 @@ class ColumnDefinition
      */
     public function getDefinition()
     {
-        $definition = '$table->%s(\'%s\'%s)%s;';
-
-        $type = $this->getTypeName();
-        $name = $this->column->getName();
-        $length = $this->column->getLength();
-        $autoIncrement = $this->column->getAutoincrement();
-        $precision = $this->column->getPrecision();
-        $scale = $this->column->getScale();
-
-        $parameters = [];
-
-        if ($this->isStringType() && $length > 0 && $length != 255) {
-            $parameters[] = ', ' . $length;
-        }
-
-        if ($this->isCharType()) {
-            $type = 'char';
-
-            if ($length > 0 && $length != 255) {
-                $parameters[] = ', ' . $length;
-            }
-        }
-
-        if ($this->isDecimalType()) {
-
-            if ($precision > 0 && $precision != 8) {
-                $parameters[] = ', ' . $precision;
-            }
-
-            if ($scale > 0 && $scale != 2) {
-                $parameters[] = ', ' . $scale;
-            }
-        }
-
-        if ($this->isFloatType() && is_null($length) && $precision > 0) {
-
-            if ($precision > 0 && $precision != 8) {
-                $parameters[] = ', ' . $precision;
-            }
-
-            if ($scale > 0 && $scale != 2) {
-                $parameters[] = ', ' . $scale;
-            }
-        }
-
-        if ($autoIncrement) {
-            $parameters[] = ', true';
-        }
+        $definition = '$table%s%s;';
 
         $definition = sprintf(
             $definition,
-            $type,
-            $name,
-            implode('', $parameters),
+            $this->getColumnSignature(),
             implode('', $this->getColumnModifiers())
         );
 
