@@ -40,7 +40,7 @@ class ColumnDefinition
      *
      * @return array
      */
-    private function getColumnModifiers()
+    public function getColumnModifiers()
     {
         $modifiers = [];
 
@@ -85,6 +85,58 @@ class ColumnDefinition
     }
 
     /**
+     * Determine if is the column type.
+     *
+     * @param string $type
+     *
+     * @return bool
+     */
+    public function isType($type)
+    {
+        return $this->getTypeName() === $type;
+    }
+
+    /**
+     * Return if is a string column.
+     *
+     * @return bool
+     */
+    public function isStringType()
+    {
+        return $this->isType('string') && $this->column->getFixed() === false;
+    }
+
+    /**
+     * Return if is a char column.
+     *
+     * @return bool
+     */
+    public function isCharType()
+    {
+        return $this->isType('string') && $this->column->getFixed();
+    }
+
+    /**
+     * Return if is a decimal column.
+     *
+     * @return bool
+     */
+    public function isDecimalType()
+    {
+        return $this->isType('decimal');
+    }
+
+    /**
+     * Return if is a float column.
+     *
+     * @return bool
+     */
+    public function isFloatType()
+    {
+        return $this->isType('float');
+    }
+
+    /**
      * Return the definitions.
      *
      * @return array
@@ -102,18 +154,19 @@ class ColumnDefinition
 
         $parameters = [];
 
-        if ($type === 'string') {
+        if ($this->isStringType() && $length > 0 && $length != 255) {
+            $parameters[] = ', ' . $length;
+        }
 
-            if ($this->column->getFixed()) {
-                $type = 'char';
-            }
+        if ($this->isCharType()) {
+            $type = 'char';
 
             if ($length > 0 && $length != 255) {
                 $parameters[] = ', ' . $length;
             }
         }
 
-        if ($type === 'decimal') {
+        if ($this->isDecimalType()) {
 
             if ($precision > 0 && $precision != 8) {
                 $parameters[] = ', ' . $precision;
@@ -124,7 +177,7 @@ class ColumnDefinition
             }
         }
 
-        if ($type === 'float' && is_null($length) && $precision > 0) {
+        if ($this->isFloatType() && is_null($length) && $precision > 0) {
 
             if ($precision > 0 && $precision != 8) {
                 $parameters[] = ', ' . $precision;
