@@ -53,11 +53,7 @@ abstract class AbstractSignature
             return '';
         }
 
-        if (count($this->arguments) > 1) {
-            return $this->convertValue($this->arguments);
-        }
-
-        return $this->convertValue($this->arguments[0]);
+        return $this->convertValue($this->arguments);
     }
 
     /**
