@@ -39,18 +39,14 @@ class IndexSignature extends AbstractSignature
 
         $arguments = $this->arguments;
 
-        $first = array_shift($arguments);
-
-        if (is_array($first) && count($first) > 1) {
-            $first = '[' . $this->convertValue($first) . ']';
-        } else {
-            $first = $this->convertValue($first);
+        if (is_array($arguments[0]) && count($arguments[0]) === 1) {
+            $arguments[0] = array_shift($arguments[0]);
         }
 
-        if (empty($arguments)) {
-            return $first;
-        }
+        $arguments = array_map(function ($argument) {
+            return $this->convertValue($argument);
+        }, $arguments);
 
-        return $first . ', ' . $this->convertValue($arguments);
+        return implode(', ', $arguments);
     }
 }

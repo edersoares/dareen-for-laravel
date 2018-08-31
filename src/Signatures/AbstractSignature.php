@@ -53,7 +53,11 @@ abstract class AbstractSignature
             return '';
         }
 
-        return $this->convertValue($this->arguments);
+        $arguments = array_map(function ($argument) {
+            return $this->convertValue($argument);
+        }, $this->arguments);
+
+        return implode(', ', $arguments);
     }
 
     /**
@@ -86,7 +90,7 @@ abstract class AbstractSignature
                 return $this->convertValue($value);
             }, $value);
 
-            return implode(', ', $convertedValues);
+            return '[' . implode(', ', $convertedValues) . ']';
         }
 
         return '';
