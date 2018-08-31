@@ -186,16 +186,11 @@ class ColumnDefinition
      */
     public function getDefinition()
     {
-        $definition = '$table%s%s;';
-
-        $definition = sprintf(
-            $definition,
-            $this->getColumnSignature(),
-            implode('', $this->getColumnModifiers())
-        );
+        $signature = $this->getColumnSignature();
+        $modifiers = implode('', $this->getColumnModifiers());
 
         return [
-            $definition
+            '$table' . $signature . $modifiers . ';'
         ];
     }
 }
