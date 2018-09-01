@@ -2,6 +2,9 @@
 
 namespace Dareen;
 
+use Dareen\Signatures\IndexSignature;
+use Dareen\Signatures\PrimaryIndexSignature;
+use Dareen\Signatures\UniqueIndexSignature;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
 use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Schema\Table;
@@ -51,32 +54,6 @@ class TableDefinition
     }
 
     /**
-     * Create index definition (primary, unique or simple index).
-     *
-     * @param string $definition
-     * @param array $columns
-     *
-     * @return array
-     */
-    private function createIndexDefinition($definition, $columns)
-    {
-        if (count($columns) > 1) {
-            $columns = '[\'' . implode('\', \'', $columns) . '\']';
-        } else {
-            $columns = '\'' . $columns[0] . '\'';
-        }
-
-        $definition = sprintf(
-            $definition,
-            $columns
-        );
-
-        return [
-            $definition
-        ];
-    }
-
-    /**
      * Return the index definition.
      *
      * @param Index $index
@@ -85,15 +62,17 @@ class TableDefinition
      */
     private function getIndexDefinition(Index $index)
     {
-        $definition = '$table->index(%s);';
-
         $columns = $index->getColumns();
 
         if (in_array($columns, $this->getForeignKeys())) {
             return [];
         }
 
-        return $this->createIndexDefinition($definition, $columns);
+        $signature = new IndexSignature($columns);
+
+        return [
+            '$table' . $signature->sign() . ';'
+        ];
     }
 
     /**
@@ -105,11 +84,13 @@ class TableDefinition
      */
     private function getPrimaryDefinition(Index $index)
     {
-        $definition = '$table->primary(%s);';
+        $signature = new PrimaryIndexSignature(
+            $index->getColumns()
+        );
 
-        $columns = $index->getColumns();
-
-        return $this->createIndexDefinition($definition, $columns);
+        return [
+            '$table' . $signature->sign() . ';'
+        ];
     }
 
     /**
@@ -121,11 +102,13 @@ class TableDefinition
      */
     private function getUniqueDefinition(Index $index)
     {
-        $definition = '$table->unique(%s);';
+        $signature = new UniqueIndexSignature(
+            $index->getColumns()
+        );
 
-        $columns = $index->getColumns();
-
-        return $this->createIndexDefinition($definition, $columns);
+        return [
+            '$table' . $signature->sign() . ';'
+        ];
     }
 
     /**
