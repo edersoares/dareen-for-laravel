@@ -2,6 +2,7 @@
 
 namespace Dareen;
 
+use Dareen\Signatures\ForeignKeySignature;
 use Dareen\Signatures\IndexSignature;
 use Dareen\Signatures\PrimaryIndexSignature;
 use Dareen\Signatures\UniqueIndexSignature;
@@ -120,24 +121,11 @@ class TableDefinition
      */
     private function getForeignDefinition(ForeignKeyConstraint $foreignKey)
     {
-        $definition = '$table->foreign(%s)->references(%s)->on(%s)%s;';
-
-        $columns = $foreignKey->getColumns();
-        $columnsForeign = $foreignKey->getForeignColumns();
-        $table = $foreignKey->getForeignTableName();
-        $table = "'{$table}'";
-
-        if (count($columns) > 1) {
-            $columns = '[\'' . implode('\', \'', $columns) . '\']';
-        } else {
-            $columns = '\'' . $columns[0] . '\'';
-        }
-
-        if (count($columnsForeign) > 1) {
-            $columnsForeign = '[\'' . implode('\', \'', $columnsForeign) . '\']';
-        } else {
-            $columnsForeign = '\'' . $columnsForeign[0] . '\'';
-        }
+        $signature = new ForeignKeySignature(
+            $foreignKey->getColumns(),
+            $foreignKey->getForeignColumns(),
+            $foreignKey->getForeignTableName()
+        );
 
         $params = [];
         $options = $foreignKey->getOptions();
@@ -150,16 +138,8 @@ class TableDefinition
             $params[] = '->onDelete(\'' . mb_strtolower($options['onDelete']) . '\')';
         }
 
-        $definition = sprintf(
-            $definition,
-            $columns,
-            $columnsForeign,
-            $table,
-            implode('', $params)
-        );
-
         return [
-            $definition
+            '$table' . $signature->sign() . implode('', $params) . ';'
         ];
     }
 
