@@ -39,6 +39,18 @@ class TableDefinition
     }
 
     /**
+     * Create a new line expression.
+     *
+     * @param string $signature
+     *
+     * @return string
+     */
+    private function createExpression($signature)
+    {
+        return '$table' . $signature . ';';
+    }
+
+    /**
      * Return all foreign keys.
      *
      * @return array
@@ -72,7 +84,7 @@ class TableDefinition
         $signature = new IndexSignature($columns);
 
         return [
-            '$table' . $signature->sign() . ';'
+            $this->createExpression($signature->sign())
         ];
     }
 
@@ -90,7 +102,7 @@ class TableDefinition
         );
 
         return [
-            '$table' . $signature->sign() . ';'
+            $this->createExpression($signature->sign())
         ];
     }
 
@@ -108,7 +120,7 @@ class TableDefinition
         );
 
         return [
-            '$table' . $signature->sign() . ';'
+            $this->createExpression($signature->sign())
         ];
     }
 
@@ -139,7 +151,7 @@ class TableDefinition
         }
 
         return [
-            '$table' . $signature->sign() . implode('', $params) . ';'
+            $this->createExpression($signature->sign() . implode('', $params))
         ];
     }
 
