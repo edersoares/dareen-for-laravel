@@ -9,7 +9,7 @@ class OnUpdateSignatureTest extends TestCase
 {
     public function testSimpleSignature()
     {
-        $signature = new OnUpdateSignature('cascade');
+        $signature = new OnUpdateSignature('CASCADE');
 
         $this->assertEquals('->onUpdate(\'cascade\')', (string) $signature);
         $this->assertEquals('->onUpdate(\'cascade\')', $signature->sign());

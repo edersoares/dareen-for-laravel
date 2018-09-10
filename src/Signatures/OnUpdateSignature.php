@@ -18,6 +18,6 @@ class OnUpdateSignature extends AbstractSignature
      */
     public function __construct($action)
     {
-        $this->addArgument($action);
+        $this->addArgument(mb_strtolower($action));
     }
 }

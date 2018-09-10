@@ -9,7 +9,7 @@ class OnDeleteSignatureTest extends TestCase
 {
     public function testSimpleSignature()
     {
-        $signature = new OnDeleteSignature('cascade');
+        $signature = new OnDeleteSignature('CASCADE');
 
         $this->assertEquals('->onDelete(\'cascade\')', (string) $signature);
         $this->assertEquals('->onDelete(\'cascade\')', $signature->sign());

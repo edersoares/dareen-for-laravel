@@ -4,6 +4,8 @@ namespace Dareen;
 
 use Dareen\Signatures\ForeignKeySignature;
 use Dareen\Signatures\IndexSignature;
+use Dareen\Signatures\OnDeleteSignature;
+use Dareen\Signatures\OnUpdateSignature;
 use Dareen\Signatures\PrimaryIndexSignature;
 use Dareen\Signatures\UniqueIndexSignature;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
@@ -143,11 +145,11 @@ class TableDefinition
         $options = $foreignKey->getOptions();
 
         if (isset($options['onUpdate'])) {
-            $params[] = '->onUpdate(\'' . mb_strtolower($options['onUpdate']) . '\')';
+            $params[] = new OnUpdateSignature($options['onUpdate']);
         }
 
         if (isset($options['onDelete'])) {
-            $params[] = '->onDelete(\'' . mb_strtolower($options['onDelete']) . '\')';
+            $params[] = new OnDeleteSignature($options['onDelete']);
         }
 
         return [
