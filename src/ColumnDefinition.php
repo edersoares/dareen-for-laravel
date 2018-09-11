@@ -9,7 +9,7 @@ use Dareen\Signatures\DecimalSignature;
 use Dareen\Signatures\DefaultSignature;
 use Dareen\Signatures\FloatSignature;
 use Dareen\Signatures\NullableSignature;
-use Dareen\Signatures\Signature;
+use Dareen\Signatures\ColumnSignature;
 use Dareen\Signatures\StringSignature;
 use Doctrine\DBAL\Schema\Column;
 
@@ -72,10 +72,10 @@ class ColumnDefinition
         }
 
         if ($autoIncrement) {
-            return new Signature($type, [$name, true]);
+            return new ColumnSignature($type, [$name, true]);
         }
 
-        return new Signature($type, [$name]);
+        return new ColumnSignature($type, [$name]);
     }
 
     /**
