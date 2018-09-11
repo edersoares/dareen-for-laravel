@@ -2,7 +2,7 @@
 
 namespace Dareen\Signatures;
 
-class StringSignature extends AbstractSignature
+class StringSignature extends ColumnSignature
 {
     /**
      * Signature name.
