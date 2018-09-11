@@ -2,7 +2,7 @@
 
 namespace Dareen\Signatures;
 
-class DefaultSignature extends AbstractSignature
+class DefaultSignature extends ModifierSignature
 {
     /**
      * Signature name.

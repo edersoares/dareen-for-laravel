@@ -2,7 +2,7 @@
 
 namespace Dareen\Signatures;
 
-class OnDeleteSignature extends AbstractSignature
+class OnDeleteSignature extends ModifierSignature
 {
     /**
      * Signature name.

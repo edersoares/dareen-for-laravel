@@ -2,7 +2,7 @@
 
 namespace Dareen\Signatures;
 
-class NullableSignature extends AbstractSignature
+class NullableSignature extends ModifierSignature
 {
     /**
      * Signature name.

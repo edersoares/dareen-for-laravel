@@ -2,7 +2,7 @@
 
 namespace Dareen\Signatures;
 
-class OnUpdateSignature extends AbstractSignature
+class OnUpdateSignature extends ModifierSignature
 {
     /**
      * Signature name.
