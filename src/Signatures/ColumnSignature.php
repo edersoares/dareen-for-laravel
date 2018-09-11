@@ -5,7 +5,7 @@ namespace Dareen\Signatures;
 class ColumnSignature extends AbstractSignature
 {
     /**
-     * Signature constructor.
+     * ColumnSignature constructor.
      *
      * @param string $name
      * @param array $arguments
