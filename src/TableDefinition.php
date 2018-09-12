@@ -2,14 +2,6 @@
 
 namespace Dareen;
 
-use Dareen\Signatures\ForeignKeySignature;
-use Dareen\Signatures\IndexSignature;
-use Dareen\Signatures\OnDeleteSignature;
-use Dareen\Signatures\OnUpdateSignature;
-use Dareen\Signatures\PrimaryIndexSignature;
-use Dareen\Signatures\UniqueIndexSignature;
-use Doctrine\DBAL\Schema\ForeignKeyConstraint;
-use Doctrine\DBAL\Schema\Index;
 use Doctrine\DBAL\Schema\Table;
 
 class TableDefinition
@@ -41,23 +33,11 @@ class TableDefinition
     }
 
     /**
-     * Create a new line expression.
-     *
-     * @param string $signature
-     *
-     * @return string
-     */
-    private function createExpression($signature)
-    {
-        return '$table' . $signature . ';';
-    }
-
-    /**
      * Return all foreign keys.
      *
      * @return array
      */
-    private function getForeignKeys()
+    public function getForeignKeys()
     {
         $foreignKeys = [];
 
@@ -66,95 +46,6 @@ class TableDefinition
         }
 
         return $foreignKeys;
-    }
-
-    /**
-     * Return the index definition.
-     *
-     * @param Index $index
-     *
-     * @return array
-     */
-    private function getIndexDefinition(Index $index)
-    {
-        $columns = $index->getColumns();
-
-        if (in_array($columns, $this->getForeignKeys())) {
-            return [];
-        }
-
-        $signature = new IndexSignature($columns);
-
-        return [
-            $this->createExpression($signature->sign())
-        ];
-    }
-
-    /**
-     * Return the primary definition.
-     *
-     * @param Index $index
-     *
-     * @return array
-     */
-    private function getPrimaryDefinition(Index $index)
-    {
-        $signature = new PrimaryIndexSignature(
-            $index->getColumns()
-        );
-
-        return [
-            $this->createExpression($signature->sign())
-        ];
-    }
-
-    /**
-     * Return the unique index definition.
-     *
-     * @param Index $index
-     *
-     * @return array
-     */
-    private function getUniqueDefinition(Index $index)
-    {
-        $signature = new UniqueIndexSignature(
-            $index->getColumns()
-        );
-
-        return [
-            $this->createExpression($signature->sign())
-        ];
-    }
-
-    /**
-     * Return the foreign definition.
-     *
-     * @param ForeignKeyConstraint $foreignKey
-     *
-     * @return array
-     */
-    private function getForeignDefinition(ForeignKeyConstraint $foreignKey)
-    {
-        $signature = new ForeignKeySignature(
-            $foreignKey->getColumns(),
-            $foreignKey->getForeignColumns(),
-            $foreignKey->getForeignTableName()
-        );
-
-        $params = [];
-        $options = $foreignKey->getOptions();
-
-        if (isset($options['onUpdate'])) {
-            $params[] = new OnUpdateSignature($options['onUpdate']);
-        }
-
-        if (isset($options['onDelete'])) {
-            $params[] = new OnDeleteSignature($options['onDelete']);
-        }
-
-        return [
-            $this->createExpression($signature->sign() . implode('', $params))
-        ];
     }
 
     /**
@@ -174,6 +65,44 @@ class TableDefinition
     }
 
     /**
+     * Return the indexes definitions.
+     *
+     * @return array
+     */
+    public function getIndexesDefinitions()
+    {
+        $indexes = [];
+
+        foreach ((array) $this->table->getIndexes() as $index) {
+            if ($index->isPrimary()) {
+                $indexes[] = new PrimaryDefinition($index, $this);
+            } elseif ($index->isUnique()) {
+                $indexes[] = new UniqueDefinition($index, $this);
+            } elseif ($index->isSimpleIndex()) {
+                $indexes[] = new IndexDefinition($index, $this);
+            }
+        }
+
+        return $indexes;
+    }
+
+    /**
+     * Return the foreign keys definitions.
+     *
+     * @return array
+     */
+    public function getForeignKeysDefinitions()
+    {
+        $foreignKeys = [];
+
+        foreach ((array) $this->table->getForeignKeys() as $foreignKey) {
+            $foreignKeys[] = new ForeignKeyDefinition($foreignKey, $this);
+        }
+
+        return $foreignKeys;
+    }
+
+    /**
      * Return the definitions.
      *
      * @return array
@@ -188,18 +117,12 @@ class TableDefinition
             $columns = array_merge($columns, $columnDefinition->getDefinition());
         }
 
-        foreach ((array) $this->table->getIndexes() as $index) {
-            if ($index->isPrimary()) {
-                $indexes = array_merge($indexes, $this->getPrimaryDefinition($index));
-            } elseif ($index->isUnique()) {
-                $indexes = array_merge($indexes, $this->getUniqueDefinition($index));
-            } elseif ($index->isSimpleIndex()) {
-                $indexes = array_merge($indexes, $this->getIndexDefinition($index));
-            }
+        foreach ($this->getIndexesDefinitions() as $indexDefinition) {
+            $indexes = array_merge($indexes, $indexDefinition->getDefinition());
         }
 
-        foreach ((array) $this->table->getForeignKeys() as $foreignKey) {
-            $indexes = array_merge($indexes, $this->getForeignDefinition($foreignKey));
+        foreach ($this->getForeignKeysDefinitions() as $foreignKeyDefinition) {
+            $foreign = array_merge($foreign, $foreignKeyDefinition->getDefinition());
         }
         
         return array_merge($columns, $indexes, $foreign);
