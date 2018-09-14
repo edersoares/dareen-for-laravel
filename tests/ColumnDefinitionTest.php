@@ -2,8 +2,8 @@
 
 namespace Tests;
 
-use Dareen\ColumnDefinition;
-use Dareen\TableDefinition;
+use Dareen\Definitions\ColumnDefinition;
+use Dareen\Definitions\TableDefinition;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Types\Type;
 

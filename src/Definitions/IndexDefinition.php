@@ -1,6 +1,6 @@
 <?php
 
-namespace Dareen;
+namespace Dareen\Definitions;
 
 use Dareen\Signatures\IndexSignature;
 use Doctrine\DBAL\Schema\Index;

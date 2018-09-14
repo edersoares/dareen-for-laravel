@@ -2,9 +2,9 @@
 
 namespace Tests;
 
-use Dareen\ColumnDefinition;
-use Dareen\SchemaDefinition;
-use Dareen\TableDefinition;
+use Dareen\Definitions\ColumnDefinition;
+use Dareen\Definitions\SchemaDefinition;
+use Dareen\Definitions\TableDefinition;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\Table;
 use Doctrine\DBAL\Types\Type;

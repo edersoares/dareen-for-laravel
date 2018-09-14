@@ -1,6 +1,6 @@
 <?php
 
-namespace Dareen;
+namespace Dareen\Definitions;
 
 use Doctrine\DBAL\Schema\AbstractSchemaManager;
 

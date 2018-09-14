@@ -2,7 +2,7 @@
 
 namespace Tests;
 
-use Dareen\SchemaDefinition;
+use Dareen\Definitions\SchemaDefinition;
 use Illuminate\Database\Connection;
 use Tests\Definitions\AbstractDefinition;
 

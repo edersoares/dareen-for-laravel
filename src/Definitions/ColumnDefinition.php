@@ -1,6 +1,6 @@
 <?php
 
-namespace Dareen;
+namespace Dareen\Definitions;
 
 use Dareen\Signatures\AbstractSignature;
 use Dareen\Signatures\CharSignature;
