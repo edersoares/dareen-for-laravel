@@ -54,7 +54,7 @@ class ColumnDefinitionTest extends TestCase
         );
 
         $this->assertEquals(
-            ['$table->integer(\'id\');'],
+            ['->integer(\'id\')'],
             $columnDefinition->getDefinition()
         );
     }
