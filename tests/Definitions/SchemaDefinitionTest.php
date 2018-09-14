@@ -1,28 +1,9 @@
 <?php
 
-namespace Tests;
+namespace Tests\Definitions;
 
-use Tests\Definitions\BasicTableWithOneColumn;
-use Tests\Definitions\BlueprintBoolean;
-use Tests\Definitions\BlueprintChar;
-use Tests\Definitions\BlueprintDate;
-use Tests\Definitions\BlueprintDateTime;
-use Tests\Definitions\BlueprintDecimal;
-use Tests\Definitions\BlueprintDouble;
-use Tests\Definitions\BlueprintFloat;
-use Tests\Definitions\BlueprintInteger;
-use Tests\Definitions\BlueprintString;
-use Tests\Definitions\BlueprintText;
-use Tests\Definitions\BlueprintTime;
-use Tests\Definitions\TableWithCommonColumns;
-use Tests\Definitions\TableWithCompositeForeignKey;
-use Tests\Definitions\TableWithCompositePrimaryKey;
-use Tests\Definitions\TableWithDefaultValueForColumn;
-use Tests\Definitions\TableWithIndexColumn;
-use Tests\Definitions\TableWithNullableColumn;
-use Tests\Definitions\TableWithSingleForeignKey;
-use Tests\Definitions\TableWithSinglePrimaryKey;
-use Tests\Definitions\TableWithUniqueColumn;
+use Tests\SchemaDefinitionRunner;
+use Tests\TestCase;
 
 class SchemaDefinitionTest extends TestCase
 {
