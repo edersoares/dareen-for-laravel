@@ -190,7 +190,7 @@ class ColumnDefinition
         $modifiers = implode('', $this->getColumnModifiers());
 
         return [
-            '$table' . $signature . $modifiers . ';'
+            $signature . $modifiers
         ];
     }
 }

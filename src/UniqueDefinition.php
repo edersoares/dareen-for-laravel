@@ -18,7 +18,7 @@ class UniqueDefinition extends IndexDefinition
         );
 
         return [
-            '$table' . $signature->sign() . ';'
+            $signature->sign()
         ];
     }
 }

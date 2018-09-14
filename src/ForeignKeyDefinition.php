@@ -60,7 +60,7 @@ class ForeignKeyDefinition
         }
 
         return [
-            '$table' . $signature->sign() . implode('', $params) . ';'
+            $signature->sign() . implode('', $params)
         ];
     }
 }

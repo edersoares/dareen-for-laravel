@@ -125,7 +125,11 @@ class TableDefinition
             $foreign = array_merge($foreign, $foreignKeyDefinition->getDefinition());
         }
         
-        return array_merge($columns, $indexes, $foreign);
+        $definitions = array_merge($columns, $indexes, $foreign);
+
+        return array_map(function ($definition) {
+            return '$table' . $definition . ';';
+        }, $definitions);
     }
 
     /**

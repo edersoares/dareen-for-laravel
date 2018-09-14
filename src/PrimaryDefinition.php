@@ -18,7 +18,7 @@ class PrimaryDefinition extends UniqueDefinition
         );
 
         return [
-            '$table' . $signature->sign() . ';'
+            $signature->sign()
         ];
     }
 }

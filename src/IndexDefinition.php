@@ -45,7 +45,7 @@ class IndexDefinition
         $signature = new IndexSignature($columns);
 
         return [
-            '$table' . $signature->sign() . ';'
+            $signature->sign()
         ];
     }
 }
