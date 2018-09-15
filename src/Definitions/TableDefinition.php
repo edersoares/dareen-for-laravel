@@ -67,7 +67,7 @@ class TableDefinition
     /**
      * Return the indexes definitions.
      *
-     * @return array
+     * @return IndexDefinition[]
      */
     public function getIndexesDefinitions()
     {
@@ -89,7 +89,7 @@ class TableDefinition
     /**
      * Return the foreign keys definitions.
      *
-     * @return array
+     * @return ForeignKeyDefinition[]
      */
     public function getForeignKeysDefinitions()
     {
