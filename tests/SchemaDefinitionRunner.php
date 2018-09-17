@@ -54,6 +54,21 @@ trait SchemaDefinitionRunner
     }
 
     /**
+     * Set the definition migration for up method.
+     *
+     * @param AbstractDefinition $definition
+     *
+     * @return void
+     */
+    public function runMigration(AbstractDefinition $definition)
+    {
+        $this->definition = $definition;
+
+        $definition->setConnection($this->connection);
+        $definition->up();
+    }
+
+    /**
      * Run the schema definition test for abstract definition instance.
      *
      * @param AbstractDefinition $definition
@@ -62,16 +77,13 @@ trait SchemaDefinitionRunner
      */
     public function runSchemaDefinitionTestFor(AbstractDefinition $definition)
     {
-        $this->definition = $definition;
-
         $connection = $this->connection;
 
         $schema = new SchemaDefinition(
             $connection->getDoctrineSchemaManager()
         );
 
-        $definition->setConnection($connection);
-        $definition->up();
+        $this->runMigration($definition);
 
         $tableDefinitionExpected = $definition->getDefinition(
             $connection->getDriverName()
