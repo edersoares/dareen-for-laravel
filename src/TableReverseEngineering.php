@@ -120,37 +120,35 @@ class TableReverseEngineering
     /**
      * Return the migrations definitions.
      *
-     * @return array
+     * @return string
      */
     public function getMigration()
     {
-        $columns = [];
-        $indexes = [];
-        $foreign = [];
+        $stub = $this->getStubForCreateTable();
 
-        if ($this->columns) {
-            foreach ($this->table->getColumnsDefinitions() as $columnDefinition) {
-                $columns = array_merge($columns, $columnDefinition->getDefinition());
-            }
-        }
+        $replaces = [
+            '/* DareenReplaceTableDefinition */' => 'DareenReplaceTableDefinition',
+            '/* DareenReplaceTableName */' => 'DareenReplaceTableName',
+            '/* DareenReplaceMigrationName */' => 'DareenReplaceMigrationName',
+        ];
 
-        if ($this->indexes) {
-            foreach ($this->table->getIndexesDefinitions() as $indexDefinition) {
-                $indexes = array_merge($indexes, $indexDefinition->getDefinition());
-            }
-        }
+        $stub = str_replace(
+            array_keys($replaces),
+            array_values($replaces),
+            $stub
+        );
 
-        if ($this->foreignKeys) {
-            foreach ($this->table->getForeignKeysDefinitions() as $foreignKeyDefinition) {
-                $foreign = array_merge($foreign, $foreignKeyDefinition->getDefinition());
-            }
-        }
+        $replaces = [
+            'DareenReplaceTableDefinition' => $this->getTableDefinition(),
+            'DareenReplaceTableName' => $this->table->getTableName(),
+            'DareenReplaceMigrationClassName' => $this->getMigrationClassName(),
+        ];
 
-        $definitions = array_merge($columns, $indexes, $foreign);
-
-        return array_map(function ($definition) {
-            return '$table' . $definition . ';';
-        }, $definitions);
+        return str_replace(
+            array_keys($replaces),
+            array_values($replaces),
+            $stub
+        );
     }
 
     /**
@@ -190,5 +188,79 @@ class TableReverseEngineering
         $name = snake_case($this->getMigrationClassName());
 
         return $date . '_' . $name . '.php';
+    }
+
+    /**
+     * Return the migrations definitions.
+     *
+     * @return array
+     */
+    public function getDefinitions()
+    {
+        $columns = [];
+        $indexes = [];
+        $foreign = [];
+
+        if ($this->columns) {
+            foreach ($this->table->getColumnsDefinitions() as $columnDefinition) {
+                $columns = array_merge($columns, $columnDefinition->getDefinition());
+            }
+        }
+
+        if ($this->indexes) {
+            foreach ($this->table->getIndexesDefinitions() as $indexDefinition) {
+                $indexes = array_merge($indexes, $indexDefinition->getDefinition());
+            }
+        }
+
+        if ($this->foreignKeys) {
+            foreach ($this->table->getForeignKeysDefinitions() as $foreignKeyDefinition) {
+                $foreign = array_merge($foreign, $foreignKeyDefinition->getDefinition());
+            }
+        }
+
+        $definitions = array_merge($columns, $indexes, $foreign);
+
+        return array_map(function ($definition) {
+            return '$table' . $definition . ';';
+        }, $definitions);
+    }
+
+    /**
+     * Return table definition.
+     *
+     * @return string
+     */
+    public function getTableDefinition()
+    {
+        $defs = $this->getDefinitions();
+        $total = count($defs);
+
+        for ($i = 1; $i < $total; $i++) {
+            $defs[$i] = "            {$defs[$i]}";
+
+        }
+
+        return implode("\n", $defs);
+    }
+
+    /**
+     * Return stub for create table.
+     *
+     * @return string
+     */
+    public function getStubForCreateTable()
+    {
+        return file_get_contents(__DIR__ . '/../stubs/create-table.php');
+    }
+
+    /**
+     * Return stub for alter table.
+     *
+     * @return string
+     */
+    public function getStubForAlterTable()
+    {
+        return file_get_contents(__DIR__ . '/../stubs/alter-table.php');
     }
 }

@@ -56,7 +56,7 @@ class TableReverseEngineeringTest extends TestCase
         $this->assertAttributeEquals(false, 'foreignKeys', $table);
     }
 
-    public function testGetMigrationMethod()
+    public function testGetDefinitionsMethod()
     {
         $tableDefinition = $this->createMock(TableDefinition::class);
 
@@ -68,7 +68,7 @@ class TableReverseEngineeringTest extends TestCase
         $table = new TableReverseEngineering($tableDefinition);
 
         $this->assertEquals(
-            [], $table->getMigration()
+            [], $table->getDefinitions()
         );
     }
 
