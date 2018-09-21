@@ -11,21 +11,21 @@ class TableReverseEngineering
      *
      * @var bool
      */
-    private $columns = false;
+    private $columns = true;
 
     /**
      * Indicate if indexes definitions will returned.
      *
      * @var bool
      */
-    private $indexes = false;
+    private $indexes = true;
 
     /**
      * Indicate if foreign keys will returned.
      *
      * @var bool
      */
-    private $foreignKeys = false;
+    private $foreignKeys = true;
 
     /**
      * Table definition.
@@ -42,9 +42,6 @@ class TableReverseEngineering
     public function __construct(TableDefinition $table)
     {
         $this->table = $table;
-        $this->columns = true;
-        $this->indexes = true;
-        $this->foreignKeys = true;
     }
 
     /**
