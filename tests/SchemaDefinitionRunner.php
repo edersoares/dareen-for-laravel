@@ -56,11 +56,11 @@ trait SchemaDefinitionRunner
     /**
      * Set the definition migration for up method.
      *
-     * @param AbstractDefinition $definition
+     * @param Migration $definition
      *
      * @return void
      */
-    public function runMigration(AbstractDefinition $definition)
+    public function runMigration(Migration $definition)
     {
         $this->definition = $definition;
 
