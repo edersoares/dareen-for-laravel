@@ -124,6 +124,8 @@ class TableReverseEngineering
         $stub = $this->getStubForCreateTable();
 
         $replaces = [
+            'DareenReplaceCreateClassName' => 'DareenReplaceMigrationClassName',
+            'DareenReplaceAlterClassName' => 'DareenReplaceMigrationClassName',
             '/* DareenReplaceTableDefinition */' => 'DareenReplaceTableDefinition',
             '/* DareenReplaceTableName */' => 'DareenReplaceTableName',
             '/* DareenReplaceMigrationName */' => 'DareenReplaceMigrationName',
