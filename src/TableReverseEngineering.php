@@ -124,11 +124,11 @@ class TableReverseEngineering
         $stub = $this->getStubForCreateTable();
 
         $replaces = [
-            'DareenReplaceCreateClassName' => 'DareenReplaceMigrationClassName',
-            'DareenReplaceAlterClassName' => 'DareenReplaceMigrationClassName',
-            '/* DareenReplaceTableDefinition */' => 'DareenReplaceTableDefinition',
-            '/* DareenReplaceTableName */' => 'DareenReplaceTableName',
-            '/* DareenReplaceMigrationName */' => 'DareenReplaceMigrationName',
+            'DareenCreateClassName' => 'DareenMigrationClassName',
+            'DareenAlterClassName' => 'DareenMigrationClassName',
+            '/* DareenTableDefinition */' => 'DareenTableDefinition',
+            '/* DareenTableName */' => 'DareenTableName',
+            '/* DareenMigrationName */' => 'DareenMigrationName',
         ];
 
         $stub = str_replace(
@@ -138,9 +138,9 @@ class TableReverseEngineering
         );
 
         $replaces = [
-            'DareenReplaceTableDefinition' => $this->getTableDefinition(),
-            'DareenReplaceTableName' => $this->table->getTableName(),
-            'DareenReplaceMigrationClassName' => $this->getMigrationClassName(),
+            'DareenTableDefinition' => $this->getTableDefinition(),
+            'DareenTableName' => $this->table->getTableName(),
+            'DareenMigrationClassName' => $this->getMigrationClassName(),
         ];
 
         return str_replace(

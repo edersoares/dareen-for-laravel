@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class DareenReplaceAlterClassName extends Migration
+class DareenAlterClassName extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class DareenReplaceAlterClassName extends Migration
      */
     public function up()
     {
-        Schema::table('DareenReplaceTableName', function (Blueprint $table) {
-            /* DareenReplaceTableDefinition */
+        Schema::table('DareenTableName', function (Blueprint $table) {
+            /* DareenTableDefinition */
         });
     }
 
@@ -25,6 +25,8 @@ class DareenReplaceAlterClassName extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('DareenReplaceTableName');
+        Schema::table('DareenTableName', function (Blueprint $table) {
+            /* DareenTableDefinition */
+        });
     }
 }
