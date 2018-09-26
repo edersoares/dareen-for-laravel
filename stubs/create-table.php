@@ -14,7 +14,7 @@ class DareenCreateClassName extends Migration
     public function up()
     {
         Schema::create('DareenTableName', function (Blueprint $table) {
-            /* DareenTableDefinition */
+            /* DareenUpTable */
         });
     }
 

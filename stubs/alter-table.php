@@ -14,7 +14,7 @@ class DareenAlterClassName extends Migration
     public function up()
     {
         Schema::table('DareenTableName', function (Blueprint $table) {
-            /* DareenTableDefinition */
+            /* DareenUpTable */
         });
     }
 
@@ -26,7 +26,7 @@ class DareenAlterClassName extends Migration
     public function down()
     {
         Schema::table('DareenTableName', function (Blueprint $table) {
-            /* DareenTableDefinition */
+            /* DareenDownTable */
         });
     }
 }

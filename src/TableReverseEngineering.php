@@ -126,7 +126,7 @@ class TableReverseEngineering
         $replaces = [
             'DareenCreateClassName' => 'DareenMigrationClassName',
             'DareenAlterClassName' => 'DareenMigrationClassName',
-            '/* DareenTableDefinition */' => 'DareenTableDefinition',
+            '/* DareenUpTable */' => 'DareenUpTable',
             '/* DareenTableName */' => 'DareenTableName',
             '/* DareenMigrationName */' => 'DareenMigrationName',
         ];
@@ -138,7 +138,7 @@ class TableReverseEngineering
         );
 
         $replaces = [
-            'DareenTableDefinition' => $this->getTableDefinition(),
+            'DareenUpTable' => $this->getTableDefinition(),
             'DareenTableName' => $this->table->getTableName(),
             'DareenMigrationClassName' => $this->getMigrationClassName(),
         ];
