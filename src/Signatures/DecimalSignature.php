@@ -22,7 +22,7 @@ class DecimalSignature extends ColumnSignature
     {
         $this->addArgument($name);
 
-        if ($this->isScaleShown($scale)) {
+        if ($this->isScaleShown($scale) || $this->isLowPrecision($precision, $scale)) {
             $this->addArgument($precision);
             $this->addArgument($scale);
         } elseif ($this->isPrecisionShown($precision)) {
@@ -39,7 +39,7 @@ class DecimalSignature extends ColumnSignature
      */
     private function isPrecisionShown($precision)
     {
-        return $precision > 0 && $precision != 8;
+        return $precision != 8;
     }
 
     /**
@@ -52,5 +52,18 @@ class DecimalSignature extends ColumnSignature
     private function isScaleShown($scale)
     {
         return $scale > 0 && $scale != 2;
+    }
+
+    /**
+     * Determine if precision is a low value.
+     *
+     * @param int $precision
+     * @param int $scale
+     *
+     * @return bool
+     */
+    private function isLowPrecision($precision, $scale)
+    {
+        return $scale === 0 && $precision < 2;
     }
 }

@@ -19,6 +19,10 @@ class BlueprintDecimal extends AbstractDefinition
             $table->decimal('decimal_value')->default(123.45);
             $table->decimal('decimal_comment')->comment('Comment in decimal');
             $table->decimal('decimal_all', 12, 4)->nullable()->default(9876.5432)->comment('Other comment in decimal');
+            $table->decimal('default_decimal_one_zero', 1, 0);
+            $table->decimal('default_decimal_one_one', 1, 1);
+            $table->decimal('default_decimal_two_one', 2, 1);
+            $table->decimal('default_decimal_two_two', 2, 2);
         });
     }
 
@@ -44,6 +48,10 @@ class BlueprintDecimal extends AbstractDefinition
                 '$table->decimal(\'decimal_value\', 10)->default(123.45);',
                 '$table->decimal(\'decimal_comment\', 10);',
                 '$table->decimal(\'decimal_all\', 10)->nullable()->default(9876.5432);',
+                '$table->decimal(\'default_decimal_one_zero\', 10);',
+                '$table->decimal(\'default_decimal_one_one\', 10);',
+                '$table->decimal(\'default_decimal_two_one\', 10);',
+                '$table->decimal(\'default_decimal_two_two\', 10);',
             ];
         }
 
@@ -55,6 +63,10 @@ class BlueprintDecimal extends AbstractDefinition
             '$table->decimal(\'decimal_value\')->default(123.45);',
             '$table->decimal(\'decimal_comment\')->comment(\'Comment in decimal\');',
             '$table->decimal(\'decimal_all\', 12, 4)->nullable()->default(9876.5432)->comment(\'Other comment in decimal\');',
+            '$table->decimal(\'default_decimal_one_zero\', 1, 0);',
+            '$table->decimal(\'default_decimal_one_one\', 1, 1);',
+            '$table->decimal(\'default_decimal_two_one\', 2, 1);',
+            '$table->decimal(\'default_decimal_two_two\', 2);',
         ];
     }
 
