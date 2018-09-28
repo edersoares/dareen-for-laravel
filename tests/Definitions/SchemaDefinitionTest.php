@@ -316,4 +316,18 @@ class SchemaDefinitionTest extends TestCase
             new BlueprintBigInteger()
         );
     }
+
+    /**
+     * @see BlueprintSmallInteger
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testBlueprintSmallInteger()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new BlueprintSmallInteger()
+        );
+    }
 }
