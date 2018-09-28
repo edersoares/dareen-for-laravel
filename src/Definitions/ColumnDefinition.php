@@ -122,6 +122,12 @@ class ColumnDefinition
             case 'datetime':
                 return 'dateTime';
 
+            case 'bigint':
+                return 'bigInteger';
+
+            case 'smallint':
+                return 'smallInteger';
+
             default:
                 return $type;
         }
