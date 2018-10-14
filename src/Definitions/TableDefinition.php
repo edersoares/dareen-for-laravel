@@ -2,6 +2,7 @@
 
 namespace Dareen\Definitions;
 
+use Throwable;
 use Doctrine\DBAL\Schema\Table;
 
 class TableDefinition
@@ -140,5 +141,26 @@ class TableDefinition
     public function getTableName()
     {
         return $this->table->getName();
+    }
+
+    /**
+     * Return if column or columns is a primary key.
+     * 
+     * @param array $columns
+     *
+     * @return bool
+     */
+    public function isPrimaryKey($columns)
+    {
+        try {
+            $primary = $this->table->getPrimaryKeyColumns();
+        } catch (Throwable $throwable) {
+            return false;
+        }
+
+        sort($columns);
+        sort($primary);
+
+        return $columns == $primary;
     }
 }
