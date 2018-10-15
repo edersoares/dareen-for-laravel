@@ -95,4 +95,27 @@ class TableDefinitionTest extends TestCase
             $tableDefinition->getTableName()
         );
     }
+
+    /**
+     * testGetDefinitionMethod.
+     *
+     * @see TableDefinition::isPrimaryKey()
+     *
+     * @return void
+     */
+    public function testIsPrimaryKeyMethod()
+    {
+        $table = $this->createMock(Table::class);
+        $schemaDefinition = $this->createMock(SchemaDefinition::class);
+
+        $table->method('getPrimaryKeyColumns')->willReturn(['id']);
+
+        $tableDefinition = new TableDefinition(
+            $table, $schemaDefinition
+        );
+
+        $this->assertTrue($tableDefinition->isPrimaryKey(['id']));
+        $this->assertFalse($tableDefinition->isPrimaryKey(['id', 'other_id']));
+        $this->assertFalse($tableDefinition->isPrimaryKey([null]));
+    }
 }
