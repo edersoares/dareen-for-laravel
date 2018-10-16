@@ -36,7 +36,7 @@ class BlueprintInteger extends AbstractDefinition
     {
         $definitions = [
             '$table->integer(\'default_integer\');',
-            '$table->integer(\'integer_autoincrement\', true);',
+            '$table->increments(\'integer_autoincrement\');',
             '$table->integer(\'integer_nullable\')->nullable();',
             '$table->integer(\'integer_value\')->default(12345);',
             '$table->primary(\'integer_autoincrement\');',

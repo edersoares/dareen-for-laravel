@@ -72,6 +72,11 @@ class ColumnDefinition
         }
 
         if ($autoIncrement) {
+
+            if ($this->table->isPrimaryKey([$name])) {
+                return new ColumnSignature('increments', [$name]);
+            }
+
             return new ColumnSignature($type, [$name, true]);
         }
 
