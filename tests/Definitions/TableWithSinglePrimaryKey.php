@@ -33,7 +33,7 @@ class TableWithSinglePrimaryKey extends AbstractDefinition
 
         if ($driver === 'sqlite') {
             return [
-                '$table->integer(\'single\', true);',
+                '$table->increments(\'single\');',
                 '$table->primary(\'single\');',
             ];
         }
