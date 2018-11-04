@@ -2,6 +2,19 @@
 
 namespace Tests\Definitions;
 
+use Tests\Definitions\Blueprint\BlueprintBigInteger;
+use Tests\Definitions\Blueprint\BlueprintBoolean;
+use Tests\Definitions\Blueprint\BlueprintChar;
+use Tests\Definitions\Blueprint\BlueprintDate;
+use Tests\Definitions\Blueprint\BlueprintDateTime;
+use Tests\Definitions\Blueprint\BlueprintDecimal;
+use Tests\Definitions\Blueprint\BlueprintDouble;
+use Tests\Definitions\Blueprint\BlueprintFloat;
+use Tests\Definitions\Blueprint\BlueprintInteger;
+use Tests\Definitions\Blueprint\BlueprintSmallInteger;
+use Tests\Definitions\Blueprint\BlueprintString;
+use Tests\Definitions\Blueprint\BlueprintText;
+use Tests\Definitions\Blueprint\BlueprintTime;
 use Tests\SchemaDefinitionRunner;
 use Tests\TestCase;
 
