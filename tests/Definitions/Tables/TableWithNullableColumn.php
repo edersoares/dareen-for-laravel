@@ -1,18 +1,19 @@
 <?php
 
-namespace Tests\Definitions;
+namespace Tests\Definitions\Tables;
 
 use Illuminate\Database\Schema\Blueprint;
+use Tests\Definitions\AbstractDefinition;
 
-class BasicTableWithOneColumn extends AbstractDefinition
+class TableWithNullableColumn extends AbstractDefinition
 {
     /**
      * @inheritDoc
      */
     public function up()
     {
-        $this->builder->create('basic', function (Blueprint $table) {
-            $table->integer('basic');
+        $this->builder->create('nullable', function (Blueprint $table) {
+            $table->integer('nullable')->nullable();
         });
     }
 
@@ -21,7 +22,7 @@ class BasicTableWithOneColumn extends AbstractDefinition
      */
     public function down()
     {
-        $this->builder->dropIfExists('basic');
+        $this->builder->dropIfExists('nullable');
     }
 
     /**
@@ -30,7 +31,7 @@ class BasicTableWithOneColumn extends AbstractDefinition
     public function getDefinition($driver)
     {
         return [
-            '$table->integer(\'basic\');',
+            '$table->integer(\'nullable\')->nullable();',
         ];
     }
 
@@ -39,6 +40,6 @@ class BasicTableWithOneColumn extends AbstractDefinition
      */
     public function getTableName()
     {
-        return 'basic';
+        return 'nullable';
     }
 }

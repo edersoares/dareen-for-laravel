@@ -5,7 +5,7 @@ namespace Tests;
 use Dareen\ReverseEngineering;
 use Dareen\TableReverseEngineering;
 use Doctrine\DBAL\Connection;
-use Tests\Definitions\TableWithCommonColumns;
+use Tests\Definitions\Tables\TableWithCommonColumns;
 
 class ReverseEngineeringTest extends TestCase
 {

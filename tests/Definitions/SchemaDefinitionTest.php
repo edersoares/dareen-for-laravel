@@ -15,6 +15,16 @@ use Tests\Definitions\Blueprint\BlueprintSmallInteger;
 use Tests\Definitions\Blueprint\BlueprintString;
 use Tests\Definitions\Blueprint\BlueprintText;
 use Tests\Definitions\Blueprint\BlueprintTime;
+use Tests\Definitions\Tables\BasicTableWithOneColumn;
+use Tests\Definitions\Tables\TableWithCommonColumns;
+use Tests\Definitions\Tables\TableWithCompositeForeignKey;
+use Tests\Definitions\Tables\TableWithCompositePrimaryKey;
+use Tests\Definitions\Tables\TableWithDefaultValueForColumn;
+use Tests\Definitions\Tables\TableWithIndexColumn;
+use Tests\Definitions\Tables\TableWithNullableColumn;
+use Tests\Definitions\Tables\TableWithSingleForeignKey;
+use Tests\Definitions\Tables\TableWithSinglePrimaryKey;
+use Tests\Definitions\Tables\TableWithUniqueColumn;
 use Tests\SchemaDefinitionRunner;
 use Tests\TestCase;
 

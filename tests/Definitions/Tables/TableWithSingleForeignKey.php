@@ -1,8 +1,9 @@
 <?php
 
-namespace Tests\Definitions;
+namespace Tests\Definitions\Tables;
 
 use Illuminate\Database\Schema\Blueprint;
+use Tests\Definitions\AbstractDefinition;
 
 class TableWithSingleForeignKey extends AbstractDefinition
 {
