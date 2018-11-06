@@ -15,7 +15,7 @@ use Tests\Definitions\Blueprint\BlueprintSmallInteger;
 use Tests\Definitions\Blueprint\BlueprintString;
 use Tests\Definitions\Blueprint\BlueprintText;
 use Tests\Definitions\Blueprint\BlueprintTime;
-use Tests\Definitions\Tables\BasicTableWithOneColumn;
+use Tests\Definitions\Tables\TableWithOneColumn;
 use Tests\Definitions\Tables\TableWithCommonColumns;
 use Tests\Definitions\Tables\TableWithCompositeForeignKey;
 use Tests\Definitions\Tables\TableWithCompositePrimaryKey;
@@ -33,7 +33,7 @@ class SchemaDefinitionTest extends TestCase
     use SchemaDefinitionRunner;
 
     /**
-     * @see BasicTableWithOneColumn
+     * @see TableWithOneColumn
      *
      * @return void
      *
@@ -42,7 +42,7 @@ class SchemaDefinitionTest extends TestCase
     public function testWithOneColumn()
     {
         $this->runSchemaDefinitionTestFor(
-            new BasicTableWithOneColumn()
+            new TableWithOneColumn()
         );
     }
 

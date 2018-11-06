@@ -5,7 +5,7 @@ namespace Tests\Definitions\Tables;
 use Illuminate\Database\Schema\Blueprint;
 use Tests\Definitions\AbstractDefinition;
 
-class BasicTableWithOneColumn extends AbstractDefinition
+class TableWithOneColumn extends AbstractDefinition
 {
     /**
      * @inheritDoc
