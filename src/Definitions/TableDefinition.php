@@ -22,6 +22,21 @@ class TableDefinition
     private $schema;
 
     /**
+     * @var array
+     */
+    private $columns = [];
+
+    /**
+     * @var array
+     */
+    private $indexes = [];
+
+    /**
+     * @var array
+     */
+    private $foreignKeys = [];
+
+    /**
      * TableDefinition constructor.
      *
      * @param Table $table
@@ -31,6 +46,31 @@ class TableDefinition
     {
         $this->table = $table;
         $this->schema = $schema;
+
+        // TODO returns null when mocked
+
+        $cols = [];
+
+        foreach ((array) $this->table->getColumns() as $column) {
+
+            $cols[$column->getName()] = $column->getType();
+
+            $this->columns[] = new ColumnDefinition($column, $this);
+        }
+
+        foreach ((array) $this->table->getIndexes() as $index) {
+            if ($index->isPrimary()) {
+                $this->indexes[] = new PrimaryDefinition($index, $this);
+            } elseif ($index->isUnique()) {
+                $this->indexes[] = new UniqueDefinition($index, $this);
+            } elseif ($index->isSimpleIndex()) {
+                $this->indexes[] = new IndexDefinition($index, $this);
+            }
+        }
+
+        foreach ((array) $this->table->getForeignKeys() as $foreignKey) {
+            $this->foreignKeys[] = new ForeignKeyDefinition($foreignKey, $this);
+        }
     }
 
     /**
@@ -56,13 +96,7 @@ class TableDefinition
      */
     public function getColumnsDefinitions()
     {
-        $columns = [];
-
-        foreach ($this->table->getColumns() as $column) {
-            $columns[] = new ColumnDefinition($column, $this);
-        }
-
-        return $columns;
+        return $this->columns;
     }
 
     /**
@@ -72,19 +106,7 @@ class TableDefinition
      */
     public function getIndexesDefinitions()
     {
-        $indexes = [];
-
-        foreach ((array) $this->table->getIndexes() as $index) {
-            if ($index->isPrimary()) {
-                $indexes[] = new PrimaryDefinition($index, $this);
-            } elseif ($index->isUnique()) {
-                $indexes[] = new UniqueDefinition($index, $this);
-            } elseif ($index->isSimpleIndex()) {
-                $indexes[] = new IndexDefinition($index, $this);
-            }
-        }
-
-        return $indexes;
+        return $this->indexes;
     }
 
     /**
@@ -94,13 +116,7 @@ class TableDefinition
      */
     public function getForeignKeysDefinitions()
     {
-        $foreignKeys = [];
-
-        foreach ((array) $this->table->getForeignKeys() as $foreignKey) {
-            $foreignKeys[] = new ForeignKeyDefinition($foreignKey, $this);
-        }
-
-        return $foreignKeys;
+        return $this->foreignKeys;
     }
 
     /**
