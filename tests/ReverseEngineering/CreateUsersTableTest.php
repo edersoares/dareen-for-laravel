@@ -14,8 +14,6 @@ class CreateUsersTableTest extends TestCase
 
     public function testMigration()
     {
-        $this->markTestSkipped();
-
         $this->runMigration(
             $create = new CreateUsersTable()
         );
