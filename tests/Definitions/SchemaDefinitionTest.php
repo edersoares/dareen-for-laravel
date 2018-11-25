@@ -11,6 +11,7 @@ use Tests\Definitions\Blueprint\BlueprintDecimal;
 use Tests\Definitions\Blueprint\BlueprintDouble;
 use Tests\Definitions\Blueprint\BlueprintFloat;
 use Tests\Definitions\Blueprint\BlueprintInteger;
+use Tests\Definitions\Blueprint\BlueprintRememberToken;
 use Tests\Definitions\Blueprint\BlueprintSmallInteger;
 use Tests\Definitions\Blueprint\BlueprintString;
 use Tests\Definitions\Blueprint\BlueprintText;
@@ -351,6 +352,20 @@ class SchemaDefinitionTest extends TestCase
     {
         $this->runSchemaDefinitionTestFor(
             new BlueprintSmallInteger()
+        );
+    }
+
+    /**
+     * @see BlueprintRememberToken
+     *
+     * @return void
+     *
+     * @throws \Exception
+     */
+    public function testBlueprintRememberToken()
+    {
+        $this->runSchemaDefinitionTestFor(
+            new BlueprintRememberToken()
         );
     }
 }

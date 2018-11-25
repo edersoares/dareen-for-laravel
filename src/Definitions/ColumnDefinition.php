@@ -56,6 +56,10 @@ class ColumnDefinition
         $scale = $this->column->getScale();
 
         if ($this->isStringType()) {
+            if ($name === 'remember_token') {
+                return new ColumnSignature('rememberToken', []);
+            }
+
             return new StringSignature($name, $length);
         }
 
@@ -92,9 +96,14 @@ class ColumnDefinition
     {
         $modifiers = [];
 
+        $name = $this->column->getName();
         $comment = $this->column->getComment();
         $default = $this->column->getDefault();
         $notNull = $this->column->getNotnull();
+
+        if ($name === 'remember_token') {
+            return [];
+        }
 
         if (false === $notNull) {
             $modifiers[] = new NullableSignature();
