@@ -40,7 +40,6 @@ class BlueprintInteger extends AbstractDefinition
             '$table->increments(\'integer_autoincrement\');',
             '$table->integer(\'integer_nullable\')->nullable();',
             '$table->integer(\'integer_value\')->default(12345);',
-            '$table->primary(\'integer_autoincrement\');',
         ];
 
         // SQLite does not support comment for column.

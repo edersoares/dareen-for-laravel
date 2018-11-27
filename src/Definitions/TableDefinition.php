@@ -2,6 +2,7 @@
 
 namespace Dareen\Definitions;
 
+use Dareen\Signatures\IncrementsSignature;
 use Throwable;
 use Doctrine\DBAL\Schema\Table;
 
@@ -60,7 +61,9 @@ class TableDefinition
 
         foreach ((array) $this->table->getIndexes() as $index) {
             if ($index->isPrimary()) {
-                $this->indexes[] = new PrimaryDefinition($index, $this);
+                if (!$this->hasIncrements()) {
+                    $this->indexes[] = new PrimaryDefinition($index, $this);
+                }
             } elseif ($index->isUnique()) {
                 $this->indexes[] = new UniqueDefinition($index, $this);
             } elseif ($index->isSimpleIndex()) {
@@ -71,6 +74,17 @@ class TableDefinition
         foreach ((array) $this->table->getForeignKeys() as $foreignKey) {
             $this->foreignKeys[] = new ForeignKeyDefinition($foreignKey, $this);
         }
+    }
+
+    public function hasIncrements()
+    {
+        foreach ($this->columns as $column) {
+            if ($column->getColumnSignature() instanceof IncrementsSignature) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**
