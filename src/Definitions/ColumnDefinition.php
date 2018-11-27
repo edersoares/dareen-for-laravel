@@ -129,11 +129,17 @@ class ColumnDefinition
      */
     public function getTypeName()
     {
+        $name = $this->column->getName();
         $type = $this->column->getType()->getName();
 
         switch ($type) {
 
             case 'datetime':
+
+                if ($name === 'email_verified_at') {
+                    return 'timestamp';
+                }
+
                 return 'dateTime';
 
             case 'bigint':
