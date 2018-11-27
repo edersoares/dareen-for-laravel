@@ -8,6 +8,7 @@ use Dareen\Signatures\CommentSignature;
 use Dareen\Signatures\DecimalSignature;
 use Dareen\Signatures\DefaultSignature;
 use Dareen\Signatures\FloatSignature;
+use Dareen\Signatures\IncrementsSignature;
 use Dareen\Signatures\NullableSignature;
 use Dareen\Signatures\ColumnSignature;
 use Dareen\Signatures\StringSignature;
@@ -78,7 +79,7 @@ class ColumnDefinition
         if ($autoIncrement) {
 
             if ($this->table->isPrimaryKey([$name])) {
-                return new ColumnSignature('increments', [$name]);
+                return new IncrementsSignature($name);
             }
 
             return new ColumnSignature($type, [$name, true]);
