@@ -17,6 +17,7 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->rememberToken();
         });
     }
 
@@ -55,6 +56,7 @@ class CreateUsersTable extends Migration
             $table->string(\'name\');
             $table->string(\'email\');
             $table->string(\'password\');
+            $table->rememberToken();
             $table->primary(\'id\');
             $table->unique(\'email\');
         });
