@@ -11,6 +11,7 @@ use Dareen\Signatures\FloatSignature;
 use Dareen\Signatures\IncrementsSignature;
 use Dareen\Signatures\NullableSignature;
 use Dareen\Signatures\ColumnSignature;
+use Dareen\Signatures\RememberTokenSignature;
 use Dareen\Signatures\StringSignature;
 use Doctrine\DBAL\Schema\Column;
 
@@ -58,7 +59,7 @@ class ColumnDefinition
 
         if ($this->isStringType()) {
             if ($name === 'remember_token') {
-                return new ColumnSignature('rememberToken', []);
+                return new RememberTokenSignature();
             }
 
             return new StringSignature($name, $length);
