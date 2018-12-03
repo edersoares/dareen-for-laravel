@@ -20,6 +20,11 @@ trait ConnectionManager
             $this->getDatabaseConnectionConfig(env('DB_CONNECTION', 'sqlite'))
         );
 
+        $connection = $manager->getConnection();
+
+        $builder = $connection->getSchemaBuilder();
+        $builder::defaultStringLength(191);
+
         return $manager->getConnection();
     }
 

@@ -2,6 +2,8 @@
 
 namespace Dareen\Signatures;
 
+use Illuminate\Database\Schema\Builder;
+
 class StringSignature extends ColumnSignature
 {
     /**
@@ -21,7 +23,7 @@ class StringSignature extends ColumnSignature
     {
         $this->addArgument($name);
 
-        if ($length && $length !== 255) {
+        if ($length && $length !== 255 && $length !== Builder::$defaultStringLength) {
             $this->addArgument($length);
         }
     }
