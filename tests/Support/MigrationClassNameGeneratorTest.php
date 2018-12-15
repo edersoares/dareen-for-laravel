@@ -1,0 +1,25 @@
+<?php
+
+namespace Tests\Support;
+
+use Dareen\TableReverseEngineering;
+use PHPUnit\Framework\TestCase;
+
+class MigrationClassNameGeneratorTest extends TestCase
+{
+    public function testCreateNaming()
+    {
+        $table = $this->createMock(TableReverseEngineering::class);
+
+        $table->method('getTableName')->willReturn('users');
+        $table->method('isCreateTableAction')->willReturn(true);
+        $table->method('isAddForeignKeysAction')->willReturn(false);
+        $table->method('isAddIndexesAction')->willReturn(false);
+
+        $generator = new MigrationClassNameGenerator();
+
+        $name = $generator->generate();
+
+        $this->assertEquals('CreateUsersTable', $name);
+    }
+}
