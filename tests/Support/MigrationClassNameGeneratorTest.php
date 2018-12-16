@@ -2,6 +2,7 @@
 
 namespace Tests\Support;
 
+use Dareen\Support\MigrationClassNameGenerator;
 use Dareen\TableReverseEngineering;
 use PHPUnit\Framework\TestCase;
 
@@ -16,7 +17,7 @@ class MigrationClassNameGeneratorTest extends TestCase
         $table->method('isAddForeignKeysAction')->willReturn(false);
         $table->method('isAddIndexesAction')->willReturn(false);
 
-        $generator = new MigrationClassNameGenerator();
+        $generator = new MigrationClassNameGenerator($table);
 
         $name = $generator->generate();
 

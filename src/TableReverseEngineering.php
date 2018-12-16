@@ -49,7 +49,7 @@ class TableReverseEngineering
      *
      * @return bool
      */
-    private function isCreateTableAction()
+    public function isCreateTableAction()
     {
         return $this->columns;
     }
@@ -59,7 +59,7 @@ class TableReverseEngineering
      *
      * @return bool
      */
-    private function isAddIndexesAction()
+    public function isAddIndexesAction()
     {
         return $this->indexes
             && $this->columns === false
@@ -71,7 +71,7 @@ class TableReverseEngineering
      *
      * @return bool
      */
-    private function isAddForeignKeysAction()
+    public function isAddForeignKeysAction()
     {
         return $this->foreignKeys
             && $this->columns === false
@@ -241,6 +241,16 @@ class TableReverseEngineering
         }
 
         return implode("\n", $defs);
+    }
+
+    /**
+     * Return table name.
+     *
+     * @return string
+     */
+    public function getTableName()
+    {
+        return $this->table->getTableName();
     }
 
     /**
