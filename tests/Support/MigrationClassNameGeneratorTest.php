@@ -17,9 +17,9 @@ class MigrationClassNameGeneratorTest extends TestCase
         $table->method('isAddForeignKeysAction')->willReturn(false);
         $table->method('isAddIndexesAction')->willReturn(false);
 
-        $generator = new MigrationClassNameGenerator($table);
+        $generator = new MigrationClassNameGenerator();
 
-        $name = $generator->generate();
+        $name = $generator->generate($table);
 
         $this->assertEquals('CreateUsersTable', $name);
     }

@@ -7,36 +7,25 @@ use Dareen\TableReverseEngineering;
 class MigrationClassNameGenerator
 {
     /**
-     * @var TableReverseEngineering
-     */
-    private $table;
-
-    /**
-     * @param TableReverseEngineering $table
-     */
-    public function __construct(TableReverseEngineering $table)
-    {
-        $this->table = $table;
-    }
-
-    /**
      * Generate a name for a migration class.
-     * 
+     *
+     * @param TableReverseEngineering $table
+     *
      * @return string
      */
-    public function generate()
+    public function generate(TableReverseEngineering $table)
     {
-        $name = $this->table->getTableName();
+        $name = $table->getTableName();
 
         $name = str_replace('.', '_', $name);
         $name = camel_case($name);
         $name = ucfirst($name);
 
-        if ($this->table->isCreateTableAction()) {
+        if ($table->isCreateTableAction()) {
             $action = 'Create';
-        } elseif ($this->table->isAddForeignKeysAction()) {
+        } elseif ($table->isAddForeignKeysAction()) {
             $action = 'AddForeignKeysOn';
-        } elseif ($this->table->isAddIndexesAction()) {
+        } elseif ($table->isAddIndexesAction()) {
             $action = 'AddIndexesOn';
         }  else {
             $action = 'Alter';
