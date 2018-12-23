@@ -23,4 +23,20 @@ class MigrationClassNameGeneratorTest extends TestCase
 
         $this->assertEquals('CreateUsersTable', $name);
     }
+
+    public function testForeignKeyNaming()
+    {
+        $table = $this->createMock(TableReverseEngineering::class);
+
+        $table->method('getTableName')->willReturn('users');
+        $table->method('isCreateTableAction')->willReturn(false);
+        $table->method('isAddForeignKeysAction')->willReturn(true);
+        $table->method('isAddIndexesAction')->willReturn(false);
+
+        $generator = new MigrationClassNameGenerator();
+
+        $name = $generator->generate($table);
+
+        $this->assertEquals('AddForeignKeysOnUsersTable', $name);
+    }
 }
