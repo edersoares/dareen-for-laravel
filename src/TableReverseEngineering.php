@@ -3,6 +3,7 @@
 namespace Dareen;
 
 use Dareen\Definitions\TableDefinition;
+use Dareen\Support\MigrationClassNameGenerator;
 
 class TableReverseEngineering
 {
@@ -157,23 +158,9 @@ class TableReverseEngineering
      */
     public function getMigrationClassName()
     {
-        $name = $this->table->getTableName();
+        $generator = new MigrationClassNameGenerator();
 
-        $name = str_replace('.', '_', $name);
-        $name = camel_case($name);
-        $name = ucfirst($name);
-
-        if ($this->isCreateTableAction()) {
-            $action = 'Create';
-        } elseif ($this->isAddForeignKeysAction()) {
-            $action = 'AddForeignKeysOn';
-        } elseif ($this->isAddIndexesAction()) {
-            $action = 'AddIndexesOn';
-        }  else {
-            $action = 'Alter';
-        }
-
-        return $action . $name . 'Table';
+        return $generator->generate($this);
     }
 
     /**
