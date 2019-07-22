@@ -14,48 +14,6 @@ class TableReverseEngineeringTest extends TestCase
         $this->table = $this->createMock(TableDefinition::class);
     }
 
-    public function testSkipColumnsMethod()
-    {
-        $table = new TableReverseEngineering(
-            $this->table
-        );
-
-        $this->assertAttributeEquals(true, 'columns', $table);
-
-        $return = $table->skipColumns();
-
-        $this->assertEquals($table, $return);
-        $this->assertAttributeEquals(false, 'columns', $table);
-    }
-
-    public function testSkipIndexesMethod()
-    {
-        $table = new TableReverseEngineering(
-            $this->table
-        );
-
-        $this->assertAttributeEquals(true, 'indexes', $table);
-
-        $return = $table->skipIndexes();
-
-        $this->assertEquals($table, $return);
-        $this->assertAttributeEquals(false, 'indexes', $table);
-    }
-
-    public function testSkipForeignKeysMethod()
-    {
-        $table = new TableReverseEngineering(
-            $this->table
-        );
-
-        $this->assertAttributeEquals(true, 'foreignKeys', $table);
-
-        $return = $table->skipForeignKeys();
-
-        $this->assertEquals($table, $return);
-        $this->assertAttributeEquals(false, 'foreignKeys', $table);
-    }
-
     public function testGetDefinitionsMethod()
     {
         $tableDefinition = $this->createMock(TableDefinition::class);
