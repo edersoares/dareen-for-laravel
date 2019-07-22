@@ -9,7 +9,7 @@ class TableReverseEngineeringTest extends TestCase
 {
     private $table;
 
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->table = $this->createMock(TableDefinition::class);
     }
