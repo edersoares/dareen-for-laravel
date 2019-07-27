@@ -2,21 +2,23 @@
 
 namespace Tests;
 
+use Doctrine\DBAL\Schema\AbstractSchemaManager;
 use Illuminate\Database\Connection;
+use Illuminate\Database\Schema\Builder;
 
 abstract class Migration
 {
     /**
      * Schema builder for migration.
      *
-     * @var \Illuminate\Database\Schema\Builder
+     * @var Builder
      */
     protected $builder;
 
     /**
      * Schema manager for manipulate the database.
      *
-     * @var \Doctrine\DBAL\Schema\AbstractSchemaManager
+     * @var AbstractSchemaManager
      */
     protected $manager;
 

@@ -3,6 +3,7 @@
 namespace Tests;
 
 use Dareen\Definitions\SchemaDefinition;
+use Exception;
 use Illuminate\Database\Connection;
 use Tests\Definitions\AbstractDefinition;
 
@@ -29,7 +30,7 @@ trait SchemaDefinitionRunner
      *
      * @return void
      *
-     * @throws \Exception
+     * @throws Exception
      */
     protected function setUp(): void
     {
@@ -44,6 +45,8 @@ trait SchemaDefinitionRunner
      * Run the down method and rollback.
      *
      * @return void
+     *
+     * @throws Exception
      */
     protected function tearDown(): void
     {
@@ -73,7 +76,7 @@ trait SchemaDefinitionRunner
      *
      * @param AbstractDefinition $definition
      *
-     * @throws \Exception
+     * @throws Exception
      */
     public function runSchemaDefinitionTestFor(AbstractDefinition $definition)
     {
