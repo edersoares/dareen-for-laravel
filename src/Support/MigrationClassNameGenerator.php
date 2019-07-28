@@ -3,6 +3,7 @@
 namespace Dareen\Support;
 
 use Dareen\TableReverseEngineering;
+use Illuminate\Support\Str;
 
 class MigrationClassNameGenerator
 {
@@ -18,7 +19,7 @@ class MigrationClassNameGenerator
         $name = $table->getTableName();
 
         $name = str_replace('.', '_', $name);
-        $name = camel_case($name);
+        $name = Str::camel($name);
         $name = ucfirst($name);
 
         if ($table->isCreateTableAction()) {

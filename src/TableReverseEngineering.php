@@ -4,6 +4,7 @@ namespace Dareen;
 
 use Dareen\Definitions\TableDefinition;
 use Dareen\Support\MigrationClassNameGenerator;
+use Illuminate\Support\Str;
 
 class TableReverseEngineering
 {
@@ -171,7 +172,7 @@ class TableReverseEngineering
     public function getMigrationFilename()
     {
         $date = date('Y_m_d_His');
-        $name = snake_case($this->getMigrationClassName());
+        $name = Str::snake($this->getMigrationClassName());
 
         return $date . '_' . $name . '.php';
     }
