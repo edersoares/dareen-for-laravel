@@ -14,6 +14,7 @@ use Dareen\Signatures\ColumnSignature;
 use Dareen\Signatures\RememberTokenSignature;
 use Dareen\Signatures\StringSignature;
 use Doctrine\DBAL\Schema\Column;
+use Illuminate\Support\Str;
 
 class ColumnDefinition
 {
@@ -56,6 +57,12 @@ class ColumnDefinition
         $autoIncrement = $this->column->getAutoincrement();
         $precision = $this->column->getPrecision();
         $scale = $this->column->getScale();
+        $default = $this->column->getDefault();
+
+        // Force create increments column instead of manual sequence
+        if (Str::contains($default, 'nextval')) {
+            return new IncrementsSignature($name);
+        }
 
         if ($this->isStringType()) {
             if ($name === 'remember_token') {
@@ -102,6 +109,10 @@ class ColumnDefinition
         $comment = $this->column->getComment();
         $default = $this->column->getDefault();
         $notNull = $this->column->getNotnull();
+
+        if (Str::contains($default, 'nextval')) {
+            return [];
+        }
 
         if ($name === 'remember_token') {
             return [];
