@@ -38,7 +38,9 @@ trait SchemaDefinitionRunner
 
         $this->connection = $connection = $this->getConnection();
 
-        $connection->beginTransaction();
+        if ($this->withinTransaction ?? true) {
+            $connection->beginTransaction();
+        }
     }
 
     /**
@@ -53,7 +55,10 @@ trait SchemaDefinitionRunner
         parent::tearDown();
 
         $this->definition->down();
-        $this->connection->rollBack();
+
+        if ($this->withinTransaction ?? true) {
+            $this->connection->rollBack();
+        }
     }
 
     /**
