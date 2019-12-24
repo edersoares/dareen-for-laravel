@@ -4,6 +4,8 @@ namespace Dareen;
 
 use Dareen\Definitions\TableDefinition;
 use Dareen\Support\MigrationClassNameGenerator;
+use DateTime;
+use Exception;
 use Illuminate\Support\Str;
 
 class TableReverseEngineering
@@ -167,14 +169,22 @@ class TableReverseEngineering
     /**
      * Return the migration filename.
      *
+     * @param DateTime $date
+     *
+     * @throws Exception
+     *
      * @return string
      */
-    public function getMigrationFilename()
+    public function getMigrationFilename(DateTime $date = null)
     {
-        $date = date('Y_m_d_His');
+        if (is_null($date)) {
+            $date = new DateTime();
+        }
+
+        $date = $date->format('Y_m_d');
         $name = Str::snake($this->getMigrationClassName());
 
-        return $date . '_' . $name . '.php';
+        return $date . '_000000_' . $name . '.php';
     }
 
     /**
