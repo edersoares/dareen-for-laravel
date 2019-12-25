@@ -42,7 +42,7 @@ class SchemaDefinition
      */
     public function getTableDefinition($name)
     {
-        $table = $this->schema->listTableDetails($name);
+        $table = $this->getSchema()->listTableDetails($name);
 
         return new TableDefinition($table, $this);
     }
