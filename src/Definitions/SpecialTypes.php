@@ -2,6 +2,8 @@
 
 namespace Dareen\Definitions;
 
+use Doctrine\DBAL\Schema\Column;
+
 trait SpecialTypes
 {
     /**
@@ -29,5 +31,46 @@ trait SpecialTypes
         }
 
         return $hasCreateAt && $hasUpdatedAt;
+    }
+
+    /**
+     * Indicate if column is increments.
+     *
+     * @param Column $column
+     *
+     * @return bool
+     */
+    public function isIncrements(Column $column)
+    {
+        $primaryKey = $this->table->getPrimaryKey();
+
+        if (empty($primaryKey)) {
+            return false;
+        }
+
+        $columns = $primaryKey->getColumns();
+
+        if (count($columns) !== 1) {
+            return false;
+        }
+
+        if (reset($columns) !== $column->getName()) {
+            return false;
+        }
+
+        return $column->getAutoincrement();
+    }
+
+    /**
+     * Indicate if column is rememberToken.
+     *
+     * @param Column $column
+     *
+     * @return bool
+     */
+    public function isRememberToken(Column $column)
+    {
+        return $column->getName() === 'remember_token'
+            && $column->getType()->getName() === 'string';
     }
 }

@@ -8,13 +8,10 @@ use Dareen\Signatures\CommentSignature;
 use Dareen\Signatures\DecimalSignature;
 use Dareen\Signatures\DefaultSignature;
 use Dareen\Signatures\FloatSignature;
-use Dareen\Signatures\IncrementsSignature;
 use Dareen\Signatures\NullableSignature;
 use Dareen\Signatures\ColumnSignature;
-use Dareen\Signatures\RememberTokenSignature;
 use Dareen\Signatures\StringSignature;
 use Doctrine\DBAL\Schema\Column;
-use Illuminate\Support\Str;
 
 class ColumnDefinition
 {
@@ -54,21 +51,10 @@ class ColumnDefinition
         $type = $this->getTypeName();
         $name = $this->column->getName();
         $length = $this->column->getLength();
-        $autoIncrement = $this->column->getAutoincrement();
         $precision = $this->column->getPrecision();
         $scale = $this->column->getScale();
-        $default = $this->column->getDefault();
-
-        // Force create increments column instead of manual sequence
-        if (Str::contains($default, 'nextval')) {
-            return new IncrementsSignature($name);
-        }
 
         if ($this->isStringType()) {
-            if ($name === 'remember_token') {
-                return new RememberTokenSignature();
-            }
-
             return new StringSignature($name, $length);
         }
 
@@ -84,15 +70,6 @@ class ColumnDefinition
             return new FloatSignature($name, $precision, $scale);
         }
 
-        if ($autoIncrement) {
-
-            if ($this->table->isPrimaryKey([$name])) {
-                return new IncrementsSignature($name);
-            }
-
-            return new ColumnSignature($type, [$name, true]);
-        }
-
         return new ColumnSignature($type, [$name]);
     }
 
@@ -105,18 +82,9 @@ class ColumnDefinition
     {
         $modifiers = [];
 
-        $name = $this->column->getName();
         $comment = $this->column->getComment();
         $default = $this->column->getDefault();
         $notNull = $this->column->getNotnull();
-
-        if (Str::contains($default, 'nextval')) {
-            return [];
-        }
-
-        if ($name === 'remember_token') {
-            return [];
-        }
 
         if (false === $notNull) {
             $modifiers[] = new NullableSignature();

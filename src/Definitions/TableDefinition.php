@@ -2,10 +2,8 @@
 
 namespace Dareen\Definitions;
 
-use Dareen\Signatures\IncrementsSignature;
-use Doctrine\DBAL\Schema\Column;
-use Throwable;
 use Doctrine\DBAL\Schema\Table;
+use Throwable;
 
 class TableDefinition
 {
@@ -54,27 +52,6 @@ class TableDefinition
         $this->analyse();
     }
 
-    public function isIncrements(Column $column)
-    {
-        $primaryKey = $this->table->getPrimaryKey();
-
-        if (empty($primaryKey)) {
-            return false;
-        }
-
-        $columns = $primaryKey->getColumns();
-
-        if (count($columns) !== 1) {
-            return false;
-        }
-
-        if (reset($columns) !== $column->getName()) {
-            return false;
-        }
-
-        return $column->getAutoincrement();
-    }
-
     private function analyse()
     {
         $columns = (array) $this->table->getColumns();
@@ -87,11 +64,11 @@ class TableDefinition
         foreach ($columns as $column) {
             if ($this->isIncrements($column)) {
                 $this->columns[] = new IncrementsDefinition($column, $this);
-
-                continue;
+            } else if ($this->isRememberToken($column)) {
+                $this->columns[] = new RememberTokenDefinition($column, $this);
+            } else {
+                $this->columns[] = new ColumnDefinition($column, $this);
             }
-
-            $this->columns[] = new ColumnDefinition($column, $this);
         }
 
         if ($hasTimestamps) {
