@@ -70,6 +70,10 @@ class ColumnDefinition
             return new FloatSignature($name, $precision, $scale);
         }
 
+        if ($type === 'dateTime' && !$this->column->getNotnull() && strtolower($this->column->getDefault()) === 'now()') {
+            return new ColumnSignature('timestamp', [$name]);
+        }
+
         return new ColumnSignature($type, [$name]);
     }
 

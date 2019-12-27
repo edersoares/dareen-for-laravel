@@ -73,4 +73,27 @@ trait SpecialTypes
         return $column->getName() === 'remember_token'
             && $column->getType()->getName() === 'string';
     }
+
+    public function isTimestamp(Column $column)
+    {
+        if ($column->getType()->getName() !== 'datetime') {
+            return false;
+        }
+
+        $defaults = [
+            'now()',
+        ];
+
+        if (in_array($column->getDefault(), $defaults) === false) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function isSoftDeletes(Column $column)
+    {
+        return $column->getName() === 'deleted_at'
+            && $column->getType()->getName() === 'datetime';
+    }
 }

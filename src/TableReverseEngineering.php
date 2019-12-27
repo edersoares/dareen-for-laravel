@@ -171,11 +171,13 @@ class TableReverseEngineering
      *
      * @param DateTime $date
      *
+     * @param string   $time
+     *
      * @throws Exception
      *
      * @return string
      */
-    public function getMigrationFilename(DateTime $date = null)
+    public function getMigrationFilename(DateTime $date = null, $time = '000000')
     {
         if (is_null($date)) {
             $date = new DateTime();
@@ -184,7 +186,7 @@ class TableReverseEngineering
         $date = $date->format('Y_m_d');
         $name = Str::snake($this->getMigrationClassName());
 
-        return $date . '_000000_' . $name . '.php';
+        return $date . '_' . $time . '_' . $name . '.php';
     }
 
     /**
