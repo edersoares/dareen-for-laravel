@@ -13,6 +13,7 @@ class TableWithCommonColumns extends AbstractDefinition
     public function up()
     {
         $this->builder->create('common', function (Blueprint $table) {
+            $table->increments('common_increments');
             $table->boolean('common_boolean');
             $table->date('common_date');
             $table->dateTime('common_datetime');
@@ -22,6 +23,7 @@ class TableWithCommonColumns extends AbstractDefinition
             $table->string('common_string');
             $table->text('common_text');
             $table->time('common_time');
+            $table->timestamps();
         });
     }
 
@@ -39,6 +41,7 @@ class TableWithCommonColumns extends AbstractDefinition
     public function getDefinition($driver)
     {
         $definitions = [
+            '$table->increments(\'common_increments\');',
             '$table->boolean(\'common_boolean\');',
             '$table->date(\'common_date\');',
             '$table->dateTime(\'common_datetime\');',
@@ -46,6 +49,7 @@ class TableWithCommonColumns extends AbstractDefinition
             '$table->string(\'common_string\');',
             '$table->text(\'common_text\');',
             '$table->time(\'common_time\');',
+            '$table->timestamps();',
         ];
 
         if ($driver === 'sqlite') {

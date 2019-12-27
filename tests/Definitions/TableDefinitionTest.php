@@ -7,6 +7,8 @@ use Dareen\Definitions\SchemaDefinition;
 use Dareen\Definitions\TableDefinition;
 use Doctrine\DBAL\Schema\Column;
 use Doctrine\DBAL\Schema\Table;
+use Doctrine\DBAL\Types\IntegerType;
+use Doctrine\DBAL\Types\StringType;
 use Doctrine\DBAL\Types\Type;
 use Tests\TestCase;
 
@@ -25,6 +27,13 @@ class TableDefinitionTest extends TestCase
         $schemaDefinition = $this->createMock(SchemaDefinition::class);
         $columnId = $this->createMock(Column::class);
         $columnName = $this->createMock(Column::class);
+
+        $columnId->method('getType')->willReturn(
+            $this->createMock(IntegerType::class)
+        );
+        $columnName->method('getType')->willReturn(
+            $this->createMock(StringType::class)
+        );
 
         $table->method('getColumns')->willReturn([$columnId, $columnName]);
 
@@ -84,6 +93,7 @@ class TableDefinitionTest extends TestCase
         $table = $this->createMock(Table::class);
         $schemaDefinition = $this->createMock(SchemaDefinition::class);
 
+        $table->method('getColumns')->willReturn([]);
         $table->method('getName')->willReturn('table-name');
 
         $tableDefinition = new TableDefinition(
@@ -108,6 +118,7 @@ class TableDefinitionTest extends TestCase
         $table = $this->createMock(Table::class);
         $schemaDefinition = $this->createMock(SchemaDefinition::class);
 
+        $table->method('getColumns')->willReturn([]);
         $table->method('getPrimaryKeyColumns')->willReturn(['id']);
 
         $tableDefinition = new TableDefinition(

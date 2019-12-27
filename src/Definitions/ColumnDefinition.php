@@ -23,14 +23,14 @@ class ColumnDefinition
      *
      * @var Column
      */
-    private $column;
+    protected $column;
 
     /**
      * TableDefinition.
      *
      * @var TableDefinition
      */
-    private $table;
+    protected $table;
 
     /**
      * ColumnDefinition constructor.

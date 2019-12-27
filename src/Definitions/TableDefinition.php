@@ -3,11 +3,14 @@
 namespace Dareen\Definitions;
 
 use Dareen\Signatures\IncrementsSignature;
+use Doctrine\DBAL\Schema\Column;
 use Throwable;
 use Doctrine\DBAL\Schema\Table;
 
 class TableDefinition
 {
+    use SpecialTypes;
+
     /**
      * DBAL Table.
      *
@@ -48,22 +51,60 @@ class TableDefinition
         $this->table = $table;
         $this->schema = $schema;
 
-        // TODO returns null when mocked
+        $this->analyse();
+    }
 
-        $cols = [];
+    public function isIncrements(Column $column)
+    {
+        $primaryKey = $this->table->getPrimaryKey();
 
-        foreach ((array) $this->table->getColumns() as $column) {
+        if (empty($primaryKey)) {
+            return false;
+        }
 
-            $cols[$column->getName()] = $column->getType();
+        $columns = $primaryKey->getColumns();
+
+        if (count($columns) !== 1) {
+            return false;
+        }
+
+        if (reset($columns) !== $column->getName()) {
+            return false;
+        }
+
+        return $column->getAutoincrement();
+    }
+
+    private function analyse()
+    {
+        $columns = (array) $this->table->getColumns();
+
+        if ($hasTimestamps = $this->hasTimestamps()) {
+            unset($columns['created_at']);
+            unset($columns['updated_at']);
+        }
+
+        foreach ($columns as $column) {
+            if ($this->isIncrements($column)) {
+                $this->columns[] = new IncrementsDefinition($column, $this);
+
+                continue;
+            }
 
             $this->columns[] = new ColumnDefinition($column, $this);
         }
 
+        if ($hasTimestamps) {
+            $this->columns[] = new TimestampsDefinition($this);
+        }
+
         foreach ((array) $this->table->getIndexes() as $index) {
             if ($index->isPrimary()) {
-                if (!$this->hasIncrements()) {
-                    $this->indexes[] = new PrimaryDefinition($index, $this);
+                if ($this->hasIncrements()) {
+                    continue;
                 }
+
+                $this->indexes[] = new PrimaryDefinition($index, $this);
             } elseif ($index->isUnique()) {
                 $this->indexes[] = new UniqueDefinition($index, $this);
             } elseif ($index->isSimpleIndex()) {
@@ -79,7 +120,7 @@ class TableDefinition
     public function hasIncrements()
     {
         foreach ($this->columns as $column) {
-            if ($column->getColumnSignature() instanceof IncrementsSignature) {
+            if ($column instanceof IncrementsDefinition) {
                 return true;
             }
         }
@@ -155,7 +196,7 @@ class TableDefinition
         foreach ($this->getForeignKeysDefinitions() as $foreignKeyDefinition) {
             $foreign = array_merge($foreign, $foreignKeyDefinition->getDefinition());
         }
-        
+
         $definitions = array_merge($columns, $indexes, $foreign);
 
         return array_map(function ($definition) {
@@ -175,7 +216,7 @@ class TableDefinition
 
     /**
      * Return if column or columns is a primary key.
-     * 
+     *
      * @param array $columns
      *
      * @return bool
