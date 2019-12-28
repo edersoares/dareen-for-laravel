@@ -2,7 +2,7 @@
 
 namespace Dareen\Definitions;
 
-use Dareen\Signatures\RememberTokenSignature;
+use Dareen\Signatures\Columns\RememberTokenSignature;
 
 class RememberTokenDefinition extends ColumnDefinition
 {

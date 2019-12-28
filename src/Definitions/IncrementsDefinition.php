@@ -2,7 +2,7 @@
 
 namespace Dareen\Definitions;
 
-use Dareen\Signatures\IncrementsSignature;
+use Dareen\Signatures\Columns\IncrementsSignature;
 
 class IncrementsDefinition extends ColumnDefinition
 {

@@ -3,7 +3,6 @@
 namespace Tests\ReverseEngineering;
 
 use Dareen\ReverseEngineering;
-use Tests\ReverseEngineering\Migrations\CreateSimpleTable;
 use Tests\ReverseEngineering\Migrations\CreateUsersTable;
 use Tests\SchemaDefinitionRunner;
 use Tests\TestCase;

@@ -2,7 +2,7 @@
 
 namespace Dareen\Definitions;
 
-use Dareen\Signatures\TimestampsSignature;
+use Dareen\Signatures\Columns\TimestampsSignature;
 
 class TimestampsDefinition extends ColumnDefinition
 {

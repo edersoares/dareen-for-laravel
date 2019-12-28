@@ -2,9 +2,9 @@
 
 namespace Dareen\Definitions;
 
-use Dareen\Signatures\ForeignKeySignature;
-use Dareen\Signatures\OnDeleteSignature;
-use Dareen\Signatures\OnUpdateSignature;
+use Dareen\Signatures\Constraints\ForeignKeySignature;
+use Dareen\Signatures\Modifiers\OnDeleteSignature;
+use Dareen\Signatures\Modifiers\OnUpdateSignature;
 use Doctrine\DBAL\Schema\ForeignKeyConstraint;
 
 class ForeignKeyDefinition

@@ -2,7 +2,7 @@
 
 namespace Dareen\Definitions;
 
-use Dareen\Signatures\SoftDeletesSignature;
+use Dareen\Signatures\Columns\SoftDeletesSignature;
 
 class SoftDeletesDefinition extends ColumnDefinition
 {

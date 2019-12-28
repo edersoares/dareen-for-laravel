@@ -2,7 +2,7 @@
 
 namespace Dareen\Definitions;
 
-use Dareen\Signatures\PrimaryIndexSignature;
+use Dareen\Signatures\Constraints\PrimaryIndexSignature;
 
 class PrimaryDefinition extends UniqueDefinition
 {

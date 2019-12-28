@@ -2,7 +2,7 @@
 
 namespace Dareen\Definitions;
 
-use Dareen\Signatures\IndexSignature;
+use Dareen\Signatures\Constraints\IndexSignature;
 use Doctrine\DBAL\Schema\Index;
 
 class IndexDefinition

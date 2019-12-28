@@ -3,14 +3,14 @@
 namespace Dareen\Definitions;
 
 use Dareen\Signatures\AbstractSignature;
-use Dareen\Signatures\CharSignature;
-use Dareen\Signatures\CommentSignature;
-use Dareen\Signatures\DecimalSignature;
-use Dareen\Signatures\DefaultSignature;
-use Dareen\Signatures\FloatSignature;
-use Dareen\Signatures\NullableSignature;
+use Dareen\Signatures\Columns\CharSignature;
+use Dareen\Signatures\Columns\DecimalSignature;
+use Dareen\Signatures\Columns\FloatSignature;
+use Dareen\Signatures\Columns\StringSignature;
 use Dareen\Signatures\ColumnSignature;
-use Dareen\Signatures\StringSignature;
+use Dareen\Signatures\Modifiers\CommentSignature;
+use Dareen\Signatures\Modifiers\DefaultSignature;
+use Dareen\Signatures\Modifiers\NullableSignature;
 use Doctrine\DBAL\Schema\Column;
 
 class ColumnDefinition

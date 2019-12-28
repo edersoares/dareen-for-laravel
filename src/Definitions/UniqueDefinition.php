@@ -2,7 +2,7 @@
 
 namespace Dareen\Definitions;
 
-use Dareen\Signatures\UniqueIndexSignature;
+use Dareen\Signatures\Constraints\UniqueIndexSignature;
 
 class UniqueDefinition extends IndexDefinition
 {
