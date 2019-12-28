@@ -3,9 +3,8 @@
 namespace Dareen\Definitions;
 
 use Dareen\Signatures\SoftDeletesSignature;
-use Dareen\Signatures\TimestampSignature;
 
-class SoftDeletesDefinition extends TimestampSignature
+class SoftDeletesDefinition extends ColumnDefinition
 {
     /**
      * Return the index definition.

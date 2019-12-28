@@ -34,6 +34,22 @@ trait SpecialTypes
     }
 
     /**
+     * Indicate if exists increments column.
+     *
+     * @return bool
+     */
+    public function hasIncrements()
+    {
+        foreach ($this->columns as $column) {
+            if ($column instanceof IncrementsDefinition) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Indicate if column is increments.
      *
      * @param Column $column

@@ -56,9 +56,6 @@ class TableDefinition
     {
         $columns = (array) $this->table->getColumns();
 
-        $hasTimestamps = false;
-        $hasSoftDeletes = false;
-
         if ($hasTimestamps = $this->hasTimestamps()) {
             unset($columns['created_at']);
             unset($columns['updated_at']);
@@ -70,7 +67,7 @@ class TableDefinition
             } else if ($this->isRememberToken($column)) {
                 $this->columns[] = new RememberTokenDefinition($column, $this);
             } else if ($this->isSoftDeletes($column)) {
-                $hasSoftDeletes = true;
+                $softDeletes = new SoftDeletesDefinition($column, $this);
             } else if ($this->isTimestamp($column)) {
                 $this->columns[] = new TimestampDefinition($column, $this);
             } else {
@@ -82,8 +79,8 @@ class TableDefinition
             $this->columns[] = new TimestampsDefinition($this);
         }
 
-        if ($hasSoftDeletes) {
-            $this->columns[] = new SoftDeletesDefinition($column, $this);
+        if (isset($softDeletes)) {
+            $this->columns[] = $softDeletes;
         }
 
         foreach ((array) $this->table->getIndexes() as $index) {
@@ -103,17 +100,6 @@ class TableDefinition
         foreach ((array) $this->table->getForeignKeys() as $foreignKey) {
             $this->foreignKeys[] = new ForeignKeyDefinition($foreignKey, $this);
         }
-    }
-
-    public function hasIncrements()
-    {
-        foreach ($this->columns as $column) {
-            if ($column instanceof IncrementsDefinition) {
-                return true;
-            }
-        }
-
-        return false;
     }
 
     /**
