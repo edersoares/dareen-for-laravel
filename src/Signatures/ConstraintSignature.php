@@ -2,7 +2,7 @@
 
 namespace Dareen\Signatures;
 
-abstract class ConstraintSignature extends AbstractSignature
+class ConstraintSignature extends AbstractSignature
 {
 
 }
