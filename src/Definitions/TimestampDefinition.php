@@ -14,7 +14,7 @@ class TimestampDefinition extends ColumnDefinition
     public function getDefinition()
     {
         $signature = new TimestampSignature(
-            $this->column->getName(), []
+            $this->column->getName()
         );
 
         return [

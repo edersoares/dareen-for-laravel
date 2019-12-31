@@ -67,7 +67,7 @@ class TableDefinition
             } else if ($this->isRememberToken($column)) {
                 $this->columns[] = new RememberTokenDefinition($column, $this);
             } else if ($this->isSoftDeletes($column)) {
-                $softDeletes = new SoftDeletesDefinition($column, $this);
+                $this->columns[] = new SoftDeletesDefinition($column, $this);
             } else if ($this->isTimestamp($column)) {
                 $this->columns[] = new TimestampDefinition($column, $this);
             } else {
@@ -79,16 +79,10 @@ class TableDefinition
             $this->columns[] = new TimestampsDefinition($this);
         }
 
-        if (isset($softDeletes)) {
-            $this->columns[] = $softDeletes;
-        }
-
         foreach ((array) $this->table->getIndexes() as $index) {
-            if ($index->isPrimary()) {
-                if ($this->hasIncrements()) {
-                    continue;
-                }
-
+            if ($index->isPrimary() && $this->hasIncrements()) {
+                continue;
+            } elseif ($index->isPrimary()) {
                 $this->indexes[] = new PrimaryDefinition($index, $this);
             } elseif ($index->isUnique()) {
                 $this->indexes[] = new UniqueDefinition($index, $this);
