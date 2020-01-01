@@ -33,6 +33,17 @@ trait SpecialTypes
         return $hasCreateAt && $hasUpdatedAt;
     }
 
+    public function hasSoftDeletes()
+    {
+        foreach ($this->table->getColumns() as $column) {
+            if ($this->isSoftDeletes($column)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /**
      * Indicate if exists increments column.
      *

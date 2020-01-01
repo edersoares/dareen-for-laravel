@@ -61,13 +61,15 @@ class TableDefinition
             unset($columns['updated_at']);
         }
 
+        if ($hasSoftDeletes = $this->hasSoftDeletes()) {
+            unset($columns['deleted_at']);
+        }
+
         foreach ($columns as $column) {
             if ($this->isIncrements($column)) {
                 $this->columns[] = new IncrementsDefinition($column, $this);
             } else if ($this->isRememberToken($column)) {
                 $this->columns[] = new RememberTokenDefinition($column, $this);
-            } else if ($this->isSoftDeletes($column)) {
-                $this->columns[] = new SoftDeletesDefinition($column, $this);
             } else if ($this->isTimestamp($column)) {
                 $this->columns[] = new TimestampDefinition($column, $this);
             } else {
@@ -77,6 +79,10 @@ class TableDefinition
 
         if ($hasTimestamps) {
             $this->columns[] = new TimestampsDefinition($this);
+        }
+
+        if ($hasSoftDeletes) {
+            $this->columns[] = new SoftDeletesDefinition($this);
         }
 
         foreach ((array) $this->table->getIndexes() as $index) {
