@@ -3,6 +3,7 @@
 namespace Tests\ReverseEngineering;
 
 use Dareen\ReverseEngineering;
+use Illuminate\Database\PDO\SQLiteDriver;
 use Tests\ReverseEngineering\Migrations\CreateSimpleTable;
 use Tests\SchemaDefinitionRunner;
 use Tests\TestCase;
@@ -23,7 +24,7 @@ class CreateSimpleTableTest extends TestCase
 
         $table = $engineering->table('simple');
 
-        if ($connection->getDriver()->getName() === 'pdo_sqlite') {
+        if ($connection->getDriver() instanceof SQLiteDriver) {
             $this->assertTrue(true);
 
             return;
